@@ -1,6 +1,18 @@
 # 🎓 EduAgent — AI Personal Tutoring Assistant
 
+<p align="center">
+  <a href="https://www.python.org/"><img src="https://img.shields.io/badge/Python-3.11%2B-3776AB?logo=python&logoColor=white" alt="Python 3.11+"></a>
+  <a href="https://langchain-ai.github.io/langgraph/"><img src="https://img.shields.io/badge/LangGraph-Agent%20Framework-1C3C3C" alt="LangGraph"></a>
+  <a href="https://fastapi.tiangolo.com/"><img src="https://img.shields.io/badge/FastAPI-009688?logo=fastapi&logoColor=white" alt="FastAPI"></a>
+  <a href="https://streamlit.io/"><img src="https://img.shields.io/badge/Streamlit-FF4B4B?logo=streamlit&logoColor=white" alt="Streamlit"></a>
+  <a href="https://www.trychroma.com/"><img src="https://img.shields.io/badge/ChromaDB-RAG-DA5B0B" alt="ChromaDB RAG"></a>
+  <a href="https://www.sqlite.org/"><img src="https://img.shields.io/badge/SQLite-003B57?logo=sqlite&logoColor=white" alt="SQLite"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow" alt="MIT License"></a>
+</p>
+
 EduAgent is a production-oriented AI tutoring system built on **LangGraph**, **FastAPI**, **Streamlit**, **SQLite**, and **ChromaDB**. It runs a multi-agent reasoning graph that plans each tutoring turn, teaches topics, generates practice quizzes, grades submissions, extracts long-term memory, and recommends next steps — all grounded in the student's own uploaded notes via retrieval-augmented generation (RAG).
+
+**📖 Documentation:** [Project Summary](docs/PROJECT_SUMMARY.md) · [Architecture & Diagrams](docs/architecture.md) · [RAG Experiments & Findings](experiments/findings.md)
 
 ```
 ┌────────────┐    ┌────────────┐    ┌────────────┐
