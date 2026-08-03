@@ -1,0 +1,10 @@
+# =============================================================================
+# EduAgent — development & CI-only dependencies
+# =============================================================================
+
+-r requirements.txt
+
+pytest>=8.2,<9.0
+pytest-asyncio>=0.23,<1.0
+pytest-cov>=5.0,<7.0
+ruff>=0.5,<1.0                         # lint + format (CI gate)

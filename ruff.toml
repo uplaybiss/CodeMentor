@@ -1,0 +1,18 @@
+# Ruff lint configuration for EduAgent.
+#
+# Rule set covers: errors + pyflakes, import sorting, modern typing (UP),
+# flake8-bugbear (B), mccabe complexity (C4), ruff-specific (RUF), and the
+# pylint subset we care about (global statements, loop-variable overwrites,
+# lambdas, lazy imports).
+#
+# Deliberately ignored (project idioms — not defects):
+#   B008    FastAPI `Depends(...)` / `File(...)` in argument defaults.
+#   PLC0415 Lazy imports used for optional heavyweight deps (langchain etc.).
+#   BLE001  Broad defensive `except Exception` with `# pragma: no cover`.
+
+line-length = 100
+target-version = "py311"
+
+[lint]
+select = ["E4", "E7", "E9", "F", "I", "UP", "B", "C4", "RUF", "PLW", "PLC"]
+ignore = ["B008", "PLC0415", "BLE001"]

@@ -1,0 +1,9 @@
+topic,latency_s,intent,lesson_topic,http_ok,lesson_present,substantive,topic_relevant,examples,recap,accuracy
+Photosynthesis,2.1813,answer_question,Explain Photosynthesis,True,True,True,True,True,True,1.0
+Newton's laws of motion,0.1393,answer_question,Explain Newton's laws of motion,True,True,True,True,True,True,1.0
+The water cycle,0.1625,answer_question,Explain The water cycle,True,True,True,True,True,True,1.0
+The periodic table,0.1729,answer_question,Explain The periodic table,True,True,True,True,True,True,1.0
+Machine learning,0.1434,answer_question,Explain Machine learning,True,True,True,True,True,True,1.0
+Fractions,0.1774,answer_question,Explain Fractions,True,True,True,True,True,True,1.0
+The human heart,0.1434,answer_question,Explain The human heart,True,True,True,True,True,True,1.0
+The American Revolution,0.1534,answer_question,Explain The American Revolution,True,True,True,True,True,True,1.0

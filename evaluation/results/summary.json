@@ -1,0 +1,86 @@
+[
+  {
+    "metric_id": "m1",
+    "metric_name": "Response Accuracy",
+    "value": 1.0,
+    "unit": "fraction (0-1)",
+    "detail": "mean across 8 topics; p95 latency 1.48s",
+    "csv": "D:\\EduAgent\\evaluation\\results\\csv\\accuracy.csv",
+    "graph": "D:\\EduAgent\\evaluation\\results\\graphs\\response_accuracy.html",
+    "num_cases": 8
+  },
+  {
+    "metric_id": "m2",
+    "metric_name": "Quiz Generation Quality",
+    "value": 1.0,
+    "unit": "fraction (0-1)",
+    "detail": "mean across 6 quizzes (6 topics)",
+    "csv": "D:\\EduAgent\\evaluation\\results\\csv\\quiz_quality.csv",
+    "graph": "D:\\EduAgent\\evaluation\\results\\graphs\\quiz_quality.html",
+    "num_cases": 6
+  },
+  {
+    "metric_id": "m3",
+    "metric_name": "Retrieval Accuracy (RAG)",
+    "value": 0.5,
+    "unit": "fraction (0-1)",
+    "detail": "hit@1=1.00 precision@4=0.50 recall@4=1.00 MRR=1.00 (6 relevant + 1 negative-control queries)",
+    "csv": "D:\\EduAgent\\evaluation\\results\\csv\\retrieval_accuracy.csv",
+    "graph": "D:\\EduAgent\\evaluation\\results\\graphs\\retrieval_accuracy.html",
+    "num_cases": 6,
+    "corpus": [
+      "notes_newton.txt",
+      "notes_photosynthesis.txt"
+    ]
+  },
+  {
+    "metric_id": "m4",
+    "metric_name": "Hallucination Rate",
+    "value": 0.0,
+    "unit": "fraction (0-1)",
+    "detail": "mean of 4 RAG-grounded turns; grounding coverage 0.00 (generic demo prose, see README)",
+    "csv": "D:\\EduAgent\\evaluation\\results\\csv\\hallucination.csv",
+    "graph": "D:\\EduAgent\\evaluation\\results\\graphs\\hallucination_rate.html",
+    "num_cases": 4
+  },
+  {
+    "metric_id": "m5",
+    "metric_name": "Response Latency",
+    "value": 0.256,
+    "unit": "seconds",
+    "detail": "p95 across 6 endpoint classes; worst-class p95 = 0.33s (upload_doc)",
+    "csv": "D:\\EduAgent\\evaluation\\results\\csv\\latency.csv",
+    "graph": "D:\\EduAgent\\evaluation\\results\\graphs\\response_latency.html",
+    "num_cases": 6
+  },
+  {
+    "metric_id": "m6",
+    "metric_name": "Memory Recall Accuracy",
+    "value": 1.0,
+    "unit": "fraction (0-1)",
+    "detail": "mean recall 1.000, mean precision 0.410 across 5 conversations",
+    "csv": "D:\\EduAgent\\evaluation\\results\\csv\\memory_recall.csv",
+    "graph": "D:\\EduAgent\\evaluation\\results\\graphs\\memory_recall.html",
+    "num_cases": 5
+  },
+  {
+    "metric_id": "m7",
+    "metric_name": "Agent Execution Time",
+    "value": 0.0847,
+    "unit": "seconds",
+    "detail": "mean teach-turn graph = 0.085s; evaluation=0.059s, memory=0.044s, rag=0.043s, teacher=0.028s, quiz=0.019s, recommendation=0.017s, planner=0.007s",
+    "csv": "D:\\EduAgent\\evaluation\\results\\csv\\agent_timing.csv",
+    "graph": "D:\\EduAgent\\evaluation\\results\\graphs\\agent_timing.html",
+    "num_cases": 11
+  },
+  {
+    "metric_id": "m8",
+    "metric_name": "End-to-End Workflow Time",
+    "value": 0.9033,
+    "unit": "seconds",
+    "detail": "mean full study-cycle = 0.90s across 5 cases (lesson+quiz+submit+dashboard+upload)",
+    "csv": "D:\\EduAgent\\evaluation\\results\\csv\\e2e_workflow.csv",
+    "graph": "D:\\EduAgent\\evaluation\\results\\graphs\\e2e_workflow.html",
+    "num_cases": 5
+  }
+]

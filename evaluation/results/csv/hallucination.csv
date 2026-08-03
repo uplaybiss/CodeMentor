@@ -1,0 +1,5 @@
+query,rag_used,n_chunks_retrieved,sources,explanation_len,n_specific_claims,specific_claims,n_grounded_claims,hallucination_rate,grounding_coverage,rag_sources_in_state
+What is the chemical equation for photosynthesis?,True,1,notes_photosynthesis.txt,201,0,(none),0,0.0,0.0,['notes_photosynthesis.txt']
+Which wavelengths of light does chlorophyll absorb most strongly?,True,1,notes_photosynthesis.txt,212,0,(none),0,0.0,0.0,['notes_photosynthesis.txt']
+Where do the light-dependent reactions of photosynthesis take place?,True,1,notes_photosynthesis.txt,212,0,(none),0,0.0,0.0,['notes_photosynthesis.txt']
+What does the Calvin cycle produce?,True,1,notes_photosynthesis.txt,187,1,Calvin,1,0.0,0.0,['notes_photosynthesis.txt']
