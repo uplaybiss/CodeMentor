@@ -1,6 +1,7 @@
 # 🎓 EduAgent — AI Personal Tutoring Assistant
 
 <p align="center">
+  <a href="https://github.com/Varsha-art126/EduAgent/actions/workflows/ci.yml"><img src="https://github.com/Varsha-art126/EduAgent/actions/workflows/ci.yml/badge.svg" alt="Tests"></a>
   <a href="https://www.python.org/"><img src="https://img.shields.io/badge/Python-3.11%2B-3776AB?logo=python&logoColor=white" alt="Python 3.11+"></a>
   <a href="https://langchain-ai.github.io/langgraph/"><img src="https://img.shields.io/badge/LangGraph-Agent%20Framework-1C3C3C" alt="LangGraph"></a>
   <a href="https://fastapi.tiangolo.com/"><img src="https://img.shields.io/badge/FastAPI-009688?logo=fastapi&logoColor=white" alt="FastAPI"></a>
