@@ -16,3 +16,5 @@ target-version = "py311"
 [lint]
 select = ["E4", "E7", "E9", "F", "I", "UP", "B", "C4", "RUF", "PLW", "PLC"]
 ignore = ["B008", "PLC0415", "BLE001"]
+# Intentional Simplified Chinese punctuation in product copy, not identifier homoglyphs.
+allowed-confusables = ["，", "：", "；", "（", "）", "？", "！", "、", "“", "”", "—", "×", "→", "｜"]

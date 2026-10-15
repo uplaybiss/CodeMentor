@@ -7,6 +7,7 @@ import logging
 from pydantic import BaseModel, Field
 
 from agents.base import (
+    call_tool,
     memory_prompt_section,
     profile_prompt_section,
     student_profile_from_state,
@@ -55,16 +56,20 @@ class PlannerAgent:
         """Classify the student's message and decide the next node."""
         user_input = (state.get("user_input") or "").strip()
         student_id = state.get("student_id") or "anonymous"
-        profile = student_profile_from_state(state, self._ctx)
+        profile = await student_profile_from_state({**state, "_task": self.name}, self._ctx)
 
         user_prompt = (
             f"Student message:\n{user_input}\n\n"
             f"{profile_prompt_section(profile)}\n\n"
             f"{memory_prompt_section(self._ctx, student_id)}"
         )
-        output = await self._ctx.llm.generate_json(
-            render_prompt("planner"),
-            user_prompt,
+        output = await call_tool(
+            self._ctx,
+            self.name,
+            "llm.json",
+            student_id=student_id,
+            system=render_prompt("planner"),
+            user=user_prompt,
             model_class=PlannerOutput,
         )
 
@@ -79,11 +84,15 @@ class PlannerAgent:
 
         if next_agent == Routes.END:
             # GENERAL / UPLOAD: answer conversationally and finish the turn.
-            reply = await self._ctx.llm.generate(
-                "You are a warm, friendly AI tutor. Reply to the student's "
+            reply = await call_tool(
+                self._ctx,
+                self.name,
+                "llm.text",
+                student_id=student_id,
+                system="You are a warm, friendly AI tutor. Reply to the student's "
                 "message briefly (1-3 sentences) and naturally, without "
                 "structured lesson output.",
-                f"Student: {user_input}",
+                user=f"Student: {user_input}\n{profile_prompt_section(profile)}",
             )
             updates["messages"] = [
                 {
@@ -93,9 +102,7 @@ class PlannerAgent:
                 }
             ]
             updates["lesson"] = None
-            logger.info(
-                "Planner routed %r -> %s (END, general reply)", user_input[:60], next_agent
-            )
+            logger.info("Planner routed %r -> %s (END, general reply)", user_input[:60], next_agent)
         else:
             logger.info(
                 "Planner routed %r -> %s (intent=%s, topic=%s)",

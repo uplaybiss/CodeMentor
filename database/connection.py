@@ -16,6 +16,7 @@ from __future__ import annotations
 import logging
 from collections.abc import Iterator
 from contextlib import contextmanager
+from contextvars import ContextVar
 from functools import lru_cache
 from pathlib import Path
 
@@ -34,6 +35,9 @@ class Database:
     """Owns an engine and session factory; exposes a transactional session."""
 
     def __init__(self, settings: DatabaseSettings) -> None:
+        self._active_session: ContextVar[Session | None] = ContextVar(
+            f"database_session_{id(self)}", default=None
+        )
         self._url = settings.url
         self._engine: Engine = self._build_engine(settings)
         self._session_factory = sessionmaker(
@@ -78,7 +82,12 @@ class Database:
     @contextmanager
     def session(self) -> Iterator[Session]:
         """Yield a bound session; commit on success, rollback on error."""
+        existing = self._active_session.get()
+        if existing is not None:
+            yield existing
+            return
         session = self._session_factory()
+        token = self._active_session.set(session)
         try:
             yield session
             session.commit()
@@ -86,6 +95,7 @@ class Database:
             session.rollback()
             raise
         finally:
+            self._active_session.reset(token)
             session.close()
 
     def dispose(self) -> None:

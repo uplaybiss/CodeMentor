@@ -3,20 +3,40 @@
 from __future__ import annotations
 
 from fastapi import APIRouter, Depends
+from sqlalchemy import func, select
 
 from api.dependencies import get_container_dep
+from database.models import Quiz, QuizAttempt
 from services.container import Container
 
 router = APIRouter(prefix="/api/v1/dashboard", tags=["dashboard"])
 
 
 @router.get("/{student_id}")
-async def get_dashboard(
-    student_id: str, container: Container = Depends(get_container_dep)
-) -> dict:
+async def get_dashboard(student_id: str, container: Container = Depends(get_container_dep)) -> dict:
     """Get a summary dashboard for the student."""
     profile = container.student_repo.get_or_create(student_id)
-    attempts = container.quiz_repo.list_attempts(student_id, limit=50)
+    with container.db.session() as session:
+        total_attempts = session.scalar(
+            select(func.count())
+            .select_from(QuizAttempt)
+            .where(QuizAttempt.student_id == student_id)
+        )
+        rows = session.execute(
+            select(
+                QuizAttempt.id.label("attempt_id"),
+                Quiz.topic.label("topic"),
+                QuizAttempt.score,
+                QuizAttempt.percent,
+                QuizAttempt.created_at,
+            )
+            .join(Quiz, Quiz.id == QuizAttempt.quiz_id)
+            .where(QuizAttempt.student_id == student_id)
+            .order_by(QuizAttempt.created_at.desc(), QuizAttempt.id.desc())
+            .limit(50)
+        ).all()
+        attempts = [dict(row._mapping) for row in reversed(rows)]
+    scores = container.student_repo.list_concept_scores(student_id)
     memory_facts = container.memory_repo.list_facts(student_id, limit=10)
     recommendation = container.memory_repo.latest_recommendation(student_id)
     doc_count = container.document_repo.count_for_student(student_id)
@@ -28,11 +48,12 @@ async def get_dashboard(
         "learning_style": profile.learning_style.value
         if hasattr(profile.learning_style, "value")
         else profile.learning_style,
-        "total_attempts": len(attempts),
+        "total_attempts": total_attempts,
         "total_documents": doc_count,
         "quiz_scores": profile.quiz_scores or [],
         "attempt_history": attempts,
-        "weak_concepts": profile.weak_concepts or [],
+        "weak_concepts": [score.concept for score in scores if score.proficiency < 0.6],
+        "concept_scores": [score.model_dump() for score in scores],
         "topics_learned": profile.topics_learned or [],
         "recent_memory_facts": [
             {"type": f["fact_type"], "content": f["content"]} for f in memory_facts

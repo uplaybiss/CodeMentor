@@ -43,7 +43,9 @@ logger = logging.getLogger(__name__)
 # -------------------------------------------------------------------------- #
 # Tutoring graph (chat turn)
 # -------------------------------------------------------------------------- #
-def build_tutoring_graph(ctx: AgentContext) -> CompiledStateGraph:
+def build_tutoring_graph(
+    ctx: AgentContext, *, checkpointer=None, interrupt_before=None
+) -> CompiledStateGraph:
     """Build and compile the main tutoring workflow graph."""
     planner = PlannerAgent(ctx)
     rag = RAGAgent(ctx)
@@ -55,12 +57,11 @@ def build_tutoring_graph(ctx: AgentContext) -> CompiledStateGraph:
     graph = StateGraph(EduAgentState)
 
     # --- nodes ---
-    graph.add_node(planner.name, planner.run)
-    graph.add_node(rag.name, rag.run)
-    graph.add_node(teacher.name, teacher.run)
-    graph.add_node(quiz.name, quiz.run)
-    graph.add_node(memory.name, memory.run)
-    graph.add_node(recommendation.name, recommendation.run)
+    for agent in (planner, rag, teacher, quiz, memory, recommendation):
+        if ctx.harness:
+            ctx.harness.bind(ctx)
+        node = ctx.harness.wrap_node(agent.name, agent.run) if ctx.harness else agent.run
+        graph.add_node(agent.name, node)
 
     # --- start → planner ---
     graph.add_edge(START, planner.name)
@@ -96,13 +97,15 @@ def build_tutoring_graph(ctx: AgentContext) -> CompiledStateGraph:
     graph.add_edge(recommendation.name, END)
 
     logger.debug("Tutoring graph compiled")
-    return graph.compile()
+    return graph.compile(checkpointer=checkpointer, interrupt_before=interrupt_before)
 
 
 # -------------------------------------------------------------------------- #
 # Evaluation graph (quiz submission)
 # -------------------------------------------------------------------------- #
-def build_evaluation_graph(ctx: AgentContext) -> CompiledStateGraph:
+def build_evaluation_graph(
+    ctx: AgentContext, *, checkpointer=None, interrupt_before=None
+) -> CompiledStateGraph:
     """Build and compile the quiz-evaluation workflow graph."""
     evaluation = EvaluationAgent(ctx)
     memory = MemoryAgent(ctx)
@@ -110,9 +113,11 @@ def build_evaluation_graph(ctx: AgentContext) -> CompiledStateGraph:
 
     graph = StateGraph(EduAgentState)
 
-    graph.add_node(evaluation.name, evaluation.run)
-    graph.add_node(memory.name, memory.run)
-    graph.add_node(recommendation.name, recommendation.run)
+    for agent in (evaluation, memory, recommendation):
+        if ctx.harness:
+            ctx.harness.bind(ctx)
+        node = ctx.harness.wrap_node(agent.name, agent.run) if ctx.harness else agent.run
+        graph.add_node(agent.name, node)
 
     graph.add_edge(START, evaluation.name)
     graph.add_edge(evaluation.name, memory.name)
@@ -120,4 +125,4 @@ def build_evaluation_graph(ctx: AgentContext) -> CompiledStateGraph:
     graph.add_edge(recommendation.name, END)
 
     logger.debug("Evaluation graph compiled")
-    return graph.compile()
+    return graph.compile(checkpointer=checkpointer, interrupt_before=interrupt_before)

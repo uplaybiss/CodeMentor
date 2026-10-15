@@ -1,0 +1,5 @@
+# Only the student UI. Install requirements-local.txt separately for the backend.
+streamlit==1.65.0
+pandas==2.3.3
+plotly==6.9.0
+httpx==0.28.1

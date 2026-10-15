@@ -1,0 +1,7 @@
+-r requirements-local.txt
+# Original RAG regression suite uses FakeEmbedder; no model weights are downloaded.
+chromadb==1.5.9
+PyMuPDF==1.28.2
+pytest==8.4.2
+pytest-asyncio==0.26.0
+ruff==0.17.0

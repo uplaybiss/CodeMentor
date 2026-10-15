@@ -9,13 +9,18 @@ for first-run demos, CI and offline development.
 
 from __future__ import annotations
 
+import json
 import re
 from typing import Any, TypeVar
 
 from pydantic import BaseModel, ValidationError
 
 from config.constants import QuizComposition
+from config.curriculum import CURRICULUM, canonical_topic
+from config.presentation import topic_label
 from models.enums import ChatIntent, DifficultyLevel, QuestionType, StudentLevel
+from services.demo_content_zh import CONTENT_ZH
+from services.demo_quiz_variants_zh import MCQ_VARIANTS, NUMERICAL_VARIANTS
 from utils.errors import LLMOutputParsingError
 
 T = TypeVar("T", bound=BaseModel)
@@ -37,14 +42,8 @@ class DemoLLMClient:
         self._settings = settings
 
     # ------------------------------------------------------------ generate --
-    async def generate(
-        self, system: str, user: str, *, temperature: float | None = None
-    ) -> str:
-        return (
-            f"Here is a concise, friendly explanation based on your message: "
-            f"«{self._first_sentence(user)}» — in demo mode no live model is "
-            f"used. Configure an LLM API key for fully-generated responses."
-        )
+    async def generate(self, system: str, user: str, *, temperature: float | None = None) -> str:
+        return "你好，我是CodeMentor。当前为本地演示模式，可以先选择一个编程知识点，体验讲解、练习与学习画像。"
 
     # -------------------------------------------------------- generate_json --
     async def generate_json(
@@ -80,8 +79,8 @@ class DemoLLMClient:
         stripped = text.strip()
         if not stripped:
             return "the topic"
-        for ln in stripped.splitlines():
-            ln = ln.strip()
+        for raw_line in stripped.splitlines():
+            ln = raw_line.strip()
             if not ln:
                 continue
             if re.match(r"^[A-Za-z ]+:$", ln):
@@ -127,11 +126,14 @@ class DemoLLMClient:
         # 1) Explicit "Topic: X" line
         topic = self._prefix_value(lines, "topic:")
         if topic:
-            return topic[:60]
+            return canonical_topic(topic) or topic[:60]
         # 2) The student-message body (line after "Student message:")
         body = self._student_message(text)
         if body:
-            return body[:60]
+            return canonical_topic(body) or body[:60]
+        for line in lines:
+            if line.startswith('{"student_id":'):
+                return json.loads(line).get("topic", "general")
         # 3) "Weak concepts:" line value (recommendation context) — the value is
         #    "none" / "none identified" when there are no weak areas, so any
         #    value starting with "none" must be treated as absent.
@@ -149,9 +151,26 @@ class DemoLLMClient:
 
     def _intent(self, user: str) -> ChatIntent:
         message = (self._student_message(user) or user).lower()
-        if any(w in message for w in ("quiz", "test me", "practice", "exercise", "mcq")):
+        if any(
+            w in message
+            for w in ("quiz", "test me", "practice", "exercise", "mcq", "练习", "测验", "出题")
+        ):
             return ChatIntent.PRACTICE
-        if any(w in message for w in ("?", "what is", "explain", "why", "how", "answer")):
+        if any(
+            w in message
+            for w in (
+                "?",
+                "what is",
+                "explain",
+                "why",
+                "how",
+                "answer",
+                "？",
+                "为什么",
+                "如何",
+                "怎么",
+            )
+        ):
             return ChatIntent.ANSWER_QUESTION
         return ChatIntent.LEARN
 
@@ -162,33 +181,41 @@ class DemoLLMClient:
         return {
             "intent": intent.value,
             "topic": topic,
-            "learning_goal": f"Understand the fundamentals of {topic}",
+            "learning_goal": f"理解{topic_label(topic)}的基础概念并通过练习检查。",
             "level": StudentLevel.BEGINNER.value,
             "prerequisites": [],
         }
 
     def _demoexplanation(self, user: str) -> dict:
         topic = self._topic(user)
+        if topic in CURRICULUM:
+            item = CONTENT_ZH[topic]
+            return {
+                "topic": topic,
+                "summary": item["summary"],
+                "explanation": item["explanation"],
+                "examples": [
+                    CURRICULUM[topic]["example"].replace(
+                        "# a becomes Fibonacci(n)", "# a是Fibonacci(n)"
+                    )
+                ],
+                "analogies": [item["analogy"]],
+                "recap": item["summary"],
+            }
         return {
             "topic": topic,
-            "summary": f"A friendly overview of {topic}.",
+            "summary": f"一起从基础理解{topic_label(topic)}。",
             "explanation": (
-                f"{topic} is easiest to learn when you break it into small, "
-                f"connected ideas. Start with the big picture, then drill into "
-                f"each detail with examples and analogies."
+                f"学习{topic_label(topic)}时，可以先把问题拆成几个小步骤，理解每一步的作用，再用具体例子检查。当前演示内容用于体验学习流程。"
             ),
             "examples": [
-                f"Example 1: a simple, everyday illustration of {topic}.",
-                f"Example 2: a step-by-step worked case for {topic}.",
+                f"先用一个简单例子说明{topic_label(topic)}。",
+                "再逐步解释例子中的每一个操作。",
             ],
             "analogies": [
-                f"Think of {topic} like learning to ride a bicycle — balance "
-                f"first, speed later.",
+                "像学习骑车一样，先把基础动作做好，再增加难度。",
             ],
-            "recap": (
-                f"To master {topic}, remember the key idea, try the examples "
-                f"yourself, and take a short quiz to lock it in."
-            ),
+            "recap": ("记住核心概念，自己尝试示例，再通过一份小练习检查理解。"),
         }
 
     def _demoquiz(self, user: str) -> dict:
@@ -204,28 +231,25 @@ class DemoLLMClient:
                 "type": qtype.value,
                 "topic": topic,
                 "points": 1,
-                "explanation": f"The key point about {topic}.",
+                "explanation": f"请结合{topic_label(topic)}的基础概念复习。",
             }
             if qtype == QuestionType.MCQ:
                 base.update(
                     {
-                        "question": f"Which statement about {topic} is correct?",
+                        "question": f"关于{topic_label(topic)}，哪一项说法正确？",
                         "options": [
-                            f"Statement A about {topic}",
-                            f"Statement B about {topic}",
-                            f"Statement C about {topic}",
-                            f"Statement D about {topic}",
+                            "先理解基础概念，再结合例子应用",
+                            "不需要任何基础概念",
+                            "只背结论就足够",
+                            "完全不需要检查结果",
                         ],
-                        "correct_answer": f"Statement A about {topic}",
+                        "correct_answer": "先理解基础概念，再结合例子应用",
                     }
                 )
             elif qtype == QuestionType.NUMERICAL:
                 base.update(
                     {
-                        "question": (
-                            f"Using the basic rule for {topic}, compute the "
-                            f"value of 2 + 3."
-                        ),
+                        "question": ("计算2 + 3的结果。"),
                         "options": [],
                         "correct_answer": "5",
                     }
@@ -233,17 +257,41 @@ class DemoLLMClient:
             else:
                 base.update(
                     {
-                        "question": (
-                            f"In your own words, summarise one key idea of {topic} "
-                            f"and give an example."
-                        ),
+                        "question": (f"用自己的话解释{topic_label(topic)}的一个核心概念，并举例。"),
                         "options": [],
-                        "correct_answer": (
-                            f"A correct summary of {topic} mentions the central "
-                            f"idea and a concrete example."
-                        ),
+                        "correct_answer": ("回答应包括核心概念及一个具体例子。"),
                     }
                 )
+            if topic in CURRICULUM:
+                item = CONTENT_ZH[topic]
+                base["explanation"] = item["summary"]
+                if qtype == QuestionType.MCQ:
+                    base.update(
+                        question=item["mcq"],
+                        options=item["options"],
+                        correct_answer=item["options"][0],
+                    )
+                elif qtype == QuestionType.NUMERICAL:
+                    base.update(
+                        question=item["numerical"], correct_answer=CURRICULUM[topic]["answer"]
+                    )
+                else:
+                    base.update(
+                        question=f"解释{topic_label(topic)}，并写一个简短代码示例。",
+                        correct_answer=item["summary"],
+                    )
+            if topic in MCQ_VARIANTS:
+                if qtype == QuestionType.MCQ and qindex > 1:
+                    prompt, options, correct, explanation = MCQ_VARIANTS[topic][qindex - 2]
+                    base.update(
+                        question=prompt,
+                        options=options,
+                        correct_answer=correct,
+                        explanation=explanation,
+                    )
+                elif qtype == QuestionType.NUMERICAL and qindex == 7:
+                    prompt, correct, explanation = NUMERICAL_VARIANTS[topic]
+                    base.update(question=prompt, correct_answer=correct, explanation=explanation)
             return base
 
         for _ in range(QuizComposition.MCQ_COUNT):
@@ -264,12 +312,11 @@ class DemoLLMClient:
         return {
             "score": 0.8,
             "feedback": (
-                "Good attempt. Revisit the core idea, add a concrete example, "
-                "and retry the subjective question to strengthen your answer."
+                "已收到你的回答。演示模式对非空主观答案固定评分为0.8，请对照参考答案补充核心概念和代码例子；这不是对真实答案质量的判断。"
             ),
             "weak_concepts": [topic],
             "revision_topics": [topic],
-            "next_lesson": f"Apply {topic} to a real-world example",
+            "next_lesson": f"尝试把{topic_label(topic)}用于一个具体例子。",
         }
 
     def _demomemoryextraction(self, user: str) -> dict:
@@ -278,7 +325,7 @@ class DemoLLMClient:
             "facts": [
                 {
                     "fact_type": "concept",
-                    "content": f"Student engaged with the topic {topic}.",
+                    "content": f"[topic:{topic}] 学习了{topic_label(topic)}。",
                     "importance": 0.7,
                 },
                 {
@@ -292,20 +339,17 @@ class DemoLLMClient:
     def _demorecommendation(self, user: str) -> dict:
         topic = self._topic(user)
         return {
-            "next_topic": f"A practical application of {topic}",
-            "rationale": (
-                f"You have started {topic}; applying it next reinforces the "
-                f"concepts and builds confidence."
-            ),
+            "next_topic": topic,
+            "rationale": (f"你已经开始学习{topic_label(topic)}，可以通过一个具体例子继续巩固。"),
             "revision_schedule": [
-                f"Day 1: re-read the {topic} recap and examples",
-                f"Day 3: retake the {topic} quiz",
-                f"Day 7: revisit {topic} with a practice problem",
+                f"第1天：复习{topic_label(topic)}的要点和示例",
+                "第3天：完成一次针对性练习",
+                "第7天：用一个应用问题检查理解",
             ],
             "daily_plan": [
-                f"Review {topic} for 15 minutes",
-                "Do one worked example",
-                "Summarise the key idea in your own words",
+                f"复习{topic_label(topic)}15分钟",
+                "完成一个代码示例",
+                "用自己的话总结核心概念",
             ],
             "weak_areas": [topic],
             "suggested_quiz_topics": [topic],

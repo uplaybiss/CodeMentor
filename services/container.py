@@ -21,6 +21,8 @@ from database.repositories import (
     QuizRepository,
     StudentRepository,
 )
+from harness.agent_harness import AgentHarness
+from harness.session_runtime import SessionRuntime
 from services.llm_client import build_llm_client
 from services.rag.service import RAGService
 
@@ -54,10 +56,12 @@ class Container:
 
         self.llm = build_llm_client(self.settings.llm)
         self.rag = RAGService(self.settings.vector_store)
+        self.harness = AgentHarness(self.db, self.settings.harness)
+        self.runtime = SessionRuntime(self.db, self.settings.harness)
 
     def context(self) -> AgentContext:
         """Return the :class:`AgentContext` handed to every agent node."""
-        return AgentContext(
+        ctx = AgentContext(
             llm=self.llm,
             settings=self.settings,
             student_repo=self.student_repo,
@@ -68,7 +72,11 @@ class Container:
             document_repo=self.document_repo,
             progress_repo=self.progress_repo,
             rag=self.rag,
+            harness=self.harness,
+            runtime=self.runtime,
         )
+        self.harness.bind(ctx)
+        return ctx
 
     def dispose(self) -> None:
         """Release DB connection pools (called at shutdown / in tests)."""

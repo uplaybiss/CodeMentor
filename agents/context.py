@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import TYPE_CHECKING
 
 from config.settings import Settings
 from database.repositories.conversation_repository import ConversationRepository
@@ -14,6 +15,10 @@ from database.repositories.quiz_repository import QuizRepository
 from database.repositories.student_repository import StudentRepository
 from services.llm_client import LLMClient
 from services.rag.service import RAGService
+
+if TYPE_CHECKING:
+    from harness.agent_harness import AgentHarness
+    from harness.session_runtime import SessionRuntime
 
 
 @dataclass
@@ -30,3 +35,5 @@ class AgentContext:
     document_repo: DocumentRepository
     progress_repo: ProgressRepository
     rag: RAGService
+    harness: AgentHarness | None = None
+    runtime: SessionRuntime | None = None

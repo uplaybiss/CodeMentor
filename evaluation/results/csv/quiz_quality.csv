@@ -1,7 +1,0 @@
-topic,latency_s,http_ok,quiz_id,difficulty,total,mcq,numerical,subjective,total_count,mcq_count,numerical_count,subjective_count,text_present,explained,unique_ids,options_ok,answer_in_options,numeric_answers,subjective_answered,topic_set,difficulty_valid,quality
-Photosynthesis,2.2211,True,quiz_335dd5c31de1875d,beginner,8,5,2,1,True,True,True,True,True,True,True,True,True,True,True,True,True,1.0
-Newton's laws of motion,0.1475,True,quiz_7dfe94163d3bc234,beginner,8,5,2,1,True,True,True,True,True,True,True,True,True,True,True,True,True,1.0
-Fractions,0.102,True,quiz_904eda12056fdaa1,beginner,8,5,2,1,True,True,True,True,True,True,True,True,True,True,True,True,True,1.0
-The periodic table,0.0991,True,quiz_9c437cd021cd74d2,beginner,8,5,2,1,True,True,True,True,True,True,True,True,True,True,True,True,True,1.0
-World War II,0.1203,True,quiz_13080448e752de4f,beginner,8,5,2,1,True,True,True,True,True,True,True,True,True,True,True,True,True,1.0
-The human heart,0.1047,True,quiz_d78dacd4dcb4f4ae,beginner,8,5,2,1,True,True,True,True,True,True,True,True,True,True,True,True,True,1.0

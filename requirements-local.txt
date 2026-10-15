@@ -1,0 +1,19 @@
+# Verified Python 3.12 lightweight API/demo; no torch, embedding model or frontend.
+fastapi==0.143.0
+uvicorn==0.54.0
+httpx==0.28.1
+python-multipart==0.0.32
+langchain-core==0.3.86
+langchain-openai==0.3.35
+langchain-google-genai==2.1.12
+langgraph==0.6.11
+langgraph-checkpoint==2.1.2
+langgraph-checkpoint-sqlite==2.0.11
+# 0.22 removed Connection.is_alive(), which this saver release requires.
+aiosqlite==0.21.0
+pydantic==2.14.1
+pydantic-settings==2.15.0
+PyYAML==6.0.3
+sqlalchemy==2.1.4
+tenacity==9.2.1
+tiktoken==0.14.0

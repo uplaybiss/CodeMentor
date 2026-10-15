@@ -27,7 +27,7 @@ class TestGenerate:
 
     async def test_generate_mentions_demo_mode(self, client):
         text = await client.generate("s", "Hello")
-        assert "demo mode" in text
+        assert "演示模式" in text
 
 
 class TestPlanner:
@@ -82,7 +82,10 @@ class TestTopicExtraction:
         assert client._topic(text) == "Algebra"
 
     def test_fallback_last_line(self, client):
-        assert client._topic("just some text about mitochondria") == "just some text about mitochondria"
+        assert (
+            client._topic("just some text about mitochondria")
+            == "just some text about mitochondria"
+        )
 
     def test_empty(self, client):
         assert client._topic("") == "general"
@@ -90,9 +93,7 @@ class TestTopicExtraction:
 
 class TestExplanation:
     async def test_builds_valid_explanation(self, client):
-        expl = await client.generate_json(
-            "s", "Topic: Gravity", model_class=Explanation
-        )
+        expl = await client.generate_json("s", "Topic: Gravity", model_class=Explanation)
         assert expl.topic == "Gravity"
         assert expl.explanation
         assert expl.examples
@@ -121,9 +122,7 @@ class TestSubjectiveGrade:
     async def test_builds_valid_grade(self, client):
         from agents.evaluation import SubjectiveGrade
 
-        grade = await client.generate_json(
-            "s", "Topic: Biology", model_class=SubjectiveGrade
-        )
+        grade = await client.generate_json("s", "Topic: Biology", model_class=SubjectiveGrade)
         assert 0.0 <= grade.score <= 1.0
         assert grade.feedback
 
@@ -140,9 +139,7 @@ class TestMemoryExtraction:
 
 class TestRecommendation:
     async def test_builds_valid_recommendation(self, client):
-        rec = await client.generate_json(
-            "s", "Weak concepts: none", model_class=Recommendation
-        )
+        rec = await client.generate_json("s", "Weak concepts: none", model_class=Recommendation)
         assert rec.next_topic
         assert rec.revision_schedule
 

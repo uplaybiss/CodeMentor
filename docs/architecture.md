@@ -1,257 +1,86 @@
-# EduAgent — Architecture
+# CodeMentor 架构与执行边界
 
-This document describes the system architecture of EduAgent. All diagrams are
-[Mermaid](https://mermaid.js.org/) and render on GitHub; they can also be edited
-in any Mermaid-aware editor.
+本说明以当前源码为准；公开准备阶段不修改教学图、测评图、Agent 或 Harness 的业务行为。
 
----
+## 分层与依赖
 
-## 1. System context
+| 层 | 源码入口 | 责任 |
+| --- | --- | --- |
+| 中文界面 | `frontend/app.py`、`session.py`、`api_client.py` | 五页学习路径、UI 会话、真实 HTTP 请求与重试。 |
+| HTTP API | `api/main.py`、`api/routers/` | 请求校验、依赖注入、状态/恢复/评分及只读统计。 |
+| 组装 | `services/container.py` | 构造 Repository、Provider、可选 RAG、Harness、Runtime。 |
+| 图调度 | `graphs/workflow.py` | 两个 StateGraph，决定节点之间的先后与条件边。 |
+| Agent | `agents/` | Planner、Teacher、Quiz、Evaluation、Memory、Recommendation、RAG。 |
+| 执行约束 | `harness/` | 节点上下文、受控工具执行、run 状态与检查点。 |
+| 数据 | `database/`、`models/` | SQLAlchemy 持久化、Pydantic Schema、图状态与运行/副作用记录。 |
+| 内容与策略 | `prompts/`、`config/curriculum.py` | 中文自然语言要求、结构化输出、主题/先修/推荐规则。 |
 
-```mermaid
-flowchart LR
-    subgraph UI["Streamlit frontend (frontend/)"]
-        S[app.py — Chat / Quiz / Dashboard / Documents]
-        C[api_client.py — httpx client]
-    end
-
-    subgraph API["FastAPI backend (api/)"]
-        R[/REST /api/v1 routers/]
-        D[Container — DI & process-wide singletons]
-    end
-
-    subgraph GRAPH["LangGraph workflows (graphs/)"]
-        T[build_tutoring_graph]
-        E[build_evaluation_graph]
-    end
-
-    subgraph AGENTS["Agents (agents/)"]
-        P[Planner] --> RA[RAG]
-        TCH[Teacher]
-        Q[Quiz] --> EV[Evaluation]
-        M[Memory] --> REC[Recommendation]
-    end
-
-    subgraph DATA["Persistence"]
-        DB[(SQLite — SQLAlchemy ORM)]
-        VS[(ChromaDB — vector store)]
-        LLM[LLM providers: OpenAI / Gemini / demo]
-    end
-
-    S --> C
-    C <-->|HTTP /api/v1| R
-    R --> D
-    D --> GRAPH
-    T --> AGENTS
-    E --> AGENTS
-    AGENTS --> DB
-    RA --> VS
-    AGENTS --> LLM
-```
-
-**Layers**
-
-| Layer | Path | Responsibility |
-|---|---|---|
-| Presentation | `frontend/` | Streamlit UI, session state, httpx API client |
-| API | `api/` | REST routers, Pydantic request/response models, DI |
-| Orchestration | `graphs/` | Compiled LangGraph state machines |
-| Agents | `agents/` | One node per agent; structured LLM I/O via `AgentContext` |
-| Domain | `models/` | Pydantic schemas, enums, LangGraph state `TypedDict` |
-| Services | `services/` | LLM client, RAG (chunk → embed → retrieve), DI container |
-| Persistence | `database/` | SQLAlchemy ORM models, repositories, connection/session mgmt |
-| Config | `config/` | pydantic-settings models (env-driven), constants, prompt loader |
-| Utils | `utils/` | Logging, error types, dependency-free helpers |
-
----
-
-## 2. Tutoring workflow (chat turn)
-
-Every `/api/v1/chat` call runs the tutoring graph. The **planner** classifies
-the student's intent and emits a deterministic `next_agent` value that drives a
-conditional edge — routing stays out of the LLM's hands.
+## 教学图
 
 ```mermaid
 flowchart TD
-    START([START]) --> P[planner\nclassify intent → next_agent]
-
-    P -->|next_agent = teach| TCH[teacher\nlesson + explanation]
-    P -->|next_agent = answer_question| RA[RAG\nretrieve relevant notes]
-    P -->|next_agent = quiz| Q[quiz\ngenerate practice quiz]
-    P -->|next_agent = end| END([END])
-
-    RA --> TCH
-
-    TCH -->|with_quiz = true| Q
-    TCH -->|else| M[memory\nextract & persist long-term facts]
-
+    S([START]) --> P[planner]
+    P -->|teach| T[teacher]
+    P -->|answer_question| R[rag]
+    P -->|quiz| Q[quiz]
+    P -->|end| E([END])
+    R --> T
+    T -->|with_quiz=true| Q
+    T -->|with_quiz=false| M[memory]
     Q --> M
-    M --> REC[recommendation\nsuggest next topic + plan]
-    REC --> END
+    M --> Rec[recommendation]
+    Rec --> E
 ```
 
-### Intent routing
+Planner 根据分类结果计算 `next_agent`，LangGraph 使用明确的条件映射路由。模型可生成主题/学习目标，但不能任意选择未注册节点。Teacher 可串接 Quiz；一般结束分支直接终止，不保证每条闲聊都会经过记忆/推荐尾部。
 
-| Planner intent | Route | Chain |
-|---|---|---|
-| `learn` | `teach` | teacher → (quiz if `with_quiz`) → memory → recommendation |
-| `answer_question` | `answer_question` | rag → teacher → memory → recommendation |
-| `practice` | `quiz` | quiz → memory → recommendation |
-| unclassified / end | `end` | terminate |
-
----
-
-## 3. Evaluation workflow (quiz submission)
-
-`/api/v1/chat/submit-quiz` runs a shorter linear graph that grades the answers,
-persists the attempt, updates memory and issues the next recommendation.
+## 测评图
 
 ```mermaid
 flowchart LR
-    START([START]) --> EV[evaluation\nscore answers, weak concepts, feedback]
-    EV --> M[memory\nupdate concept proficiency]
-    M --> REC[recommendation\nnext lesson + daily plan]
-    REC --> END([END])
+    S([START]) --> E[evaluation] --> M[memory] --> R[recommendation] --> End([END])
 ```
 
----
+Evaluation 校验题目 ID，选择题比较完整选项文本，数值题采用容差。主观题由 Provider 返回 0–1 分值；总分由 Python 计算。Demo 的非空主观题固定为 0.8。评分、错题、掌握度、成绩与进度仍经原注册写工具持久化；推荐沿用原课程策略。
 
-## 4. RAG pipeline
+## Harness 三个关键部分
 
-Documents are ingested once; retrieval happens on every `answer_question` turn.
+### Context Builder
 
-```mermaid
-flowchart LR
-    subgraph INGEST["Ingestion (api/routers/documents.py → services/rag/ingestion.py)"]
-        F[PDF / TXT / MD] --> EX[extract text\nPyMuPDF]
-        EX --> CH[chunk\ntiktoken-aware, overlap]
-        CH --> EM[embed\nsentence-transformers / ONNX fallback]
-        EM --> VS[(ChromaDB)]
-    end
+`harness/context_builder.py` 按 student/topic 查询画像、主题掌握度、近期相关对话、长期记忆和错题。先在 SQL 层过滤/限制记录，再按优先级删减内容，以 `cl100k_base` 精确计数上下文 JSON。
 
-    subgraph RETRIEVE["Retrieval (services/rag/service.py)"]
-        Q[student question] --> QE[embed query]
-        QE --> SR[similarity search top-k]
-        SR --> CTX[rag_context + sources\nfed to teacher]
-    end
-```
+默认 `HARNESS_CONTEXT_TOKENS=512` 限制的是注入上下文载荷，不是完整系统提示、模型总上下文窗口或 API 计费 token。不能将该计数解释为真实模型费用或性能收益。超过预算且不能继续裁剪时，抛出明确的预算错误。
 
-Notes:
+### Tool Guard
 
-* Chunking is token-aware when `tiktoken` is available, with a word-based
-  fallback.
-* Embeddings default to local `sentence-transformers` (no API key); a
-  deterministic trigram-hash embedder exists for tests.
-* Re-ingesting a `doc_id` replaces its prior chunks; deleting a document also
-  clears its vectors.
+`harness/tools.py` 注册工具与节点权限；`harness/tool_guard.py` 处理实际 dispatch：校验工具名、节点权限、Pydantic 参数、学生归属、调用次数、重复签名和超时，并保留运行事件。
 
----
+只读工具按设定执行有限重试；本地同步写工具将业务写入与 `HarnessEffect` 记录放在同一数据库事务，重复 effect 返回缓存结果。计数单位是注册工具的 dispatch 尝试，包含重试，不是底层 SQL 数量或 Provider SDK 的网络重试数量。
 
-## 5. Data model (SQLite)
+写入截止时间是软限制；不能据此声称已经中止运行中的线程、外部 API 或实现分布式 exactly-once。当前机制针对本地数据库副作用。
 
-All tables reference `students.id`; list-valued columns use SQLite `JSON`.
+### Session Runtime
 
-```mermaid
-erDiagram
-    students ||--o{ topics : "topics_learned"
-    students ||--o{ concept_scores : "proficiency"
-    students ||--o{ lessons : "taught"
-    students ||--o{ quizzes : "generated"
-    students ||--o{ quiz_attempts : "submitted"
-    students ||--o{ conversations : "transcript"
-    students ||--o{ memory_entries : "long-term facts"
-    students ||--o{ documents : "uploaded"
-    students ||--o{ recommendations : "latest"
-    students ||--o{ progress_snapshots : "learning curve"
+`harness/session_runtime.py` 用 student/session/run/workflow 元组生成 thread 身份，将请求哈希、状态、结果与持久调用预算保存在业务库，使用 `AsyncSqliteSaver` 保存图检查点。
 
-    quizzes ||--o{ quiz_questions : "contains"
+- 新 run 执行教学图或测评图；同 ID 不同请求返回冲突。
+- 同一已完成 run 重放结果，不再新增业务写入。
+- 受支持节点可暂停；恢复从已有检查点继续。
+- 自动测验提交身份由学生、测验和答案形成；显式新 run 代表有意重新尝试。
+- 锁是进程内 `asyncio.Lock`，当前测试部署使用单 API 进程。
 
-    students {
-        string id PK
-        string name
-        string level
-        string learning_style
-        json topics_learned
-        json weak_concepts
-        json quiz_scores
-    }
-    quizzes {
-        string id PK
-        string student_id FK
-        string topic
-        string difficulty
-    }
-    quiz_questions {
-        int id PK
-        string quiz_id FK
-        string qtype
-        text question
-        json options
-        text correct_answer
-        int points
-    }
-    quiz_attempts {
-        string id PK
-        string quiz_id FK
-        json answers
-        float percent
-        json weak_concepts
-        text feedback
-    }
-```
+`harness/agent_harness.py` 将节点包装、Context Builder 与 Tool Guard 串起来；LangGraph 仍负责流程控制，Runtime 负责一次流程的生命周期，不另建一套教学调度算法。
 
-### Repository ↔ table mapping
+## 前端标识、重试与画像
 
-| Repository | Tables |
-|---|---|
-| `StudentRepository` | `students`, `topics`, `concept_scores` |
-| `QuizRepository` | `quizzes`, `quiz_questions`, `quiz_attempts` |
-| `LessonRepository` | `lessons` |
-| `MemoryRepository` | `memory_entries`, `recommendations` |
-| `ConversationRepository` | `conversations` |
-| `DocumentRepository` | `documents` |
-| `ProgressRepository` | `progress_snapshots` |
+同一界面会话保持 session，新的主动消息生成新的 run。网络失败后先查询原 run，再继续或重发同一请求。评分首次提交后保留答案，成功结果缓存在 UI 会话，rerun 不重新 POST。
 
----
+清空界面只改变临时聊天状态，数据库历史保留。整页刷新会重置当前聊天/活动测验，历史成绩仍可从 API 读取。档案名映射到本地稳定 ID，但不提供登录或身份认证。
 
-## 6. Chat request sequence
+dashboard 的总数统计所有作答，曲线只取最近 50 次；当前弱项来自最新 ConceptScore 的 `<0.6`，而本次错题反馈只描述该测验。完成讲解的主题不等于已经掌握。
 
-```mermaid
-sequenceDiagram
-    participant UI as Streamlit
-    participant API as FastAPI /api/v1
-    participant G as Tutoring graph
-    participant LLM as LLM provider
-    participant DB as SQLite
-    participant VS as ChromaDB
+## RAG 与部署限制
 
-    UI->>API: POST /chat {student_id, message, with_quiz}
-    API->>G: ainvoke(state)
-    G->>LLM: planner classify intent
-    LLM-->>G: intent=answer_question
-    G->>VS: similarity search(query)
-    VS-->>G: top-k chunks
-    G->>LLM: teacher answer (grounded in chunks)
-    LLM-->>G: lesson
-    G->>DB: persist lesson + memory
-    G-->>API: final state
-    API-->>UI: ChatResponse {messages, lesson, ...}
-```
+完整路径提供文档提取、分块、Embedding、Chroma 检索及来源；轻量 Demo 将它关闭，前端据 `/health.rag_enabled` 隐藏上传。测试启用分支使用 FakeEmbedder，不代表真实模型检索质量已验证。
 
----
-
-## 7. LLM provider selection
-
-```mermaid
-flowchart LR
-    ENV[LLM_PROVIDER] -->|openai| O[ChatOpenAI]
-    ENV -->|gemini| GE[ChatGoogleGenerativeAI]
-    ENV -->|demo| DM[DemoProvider\nno API key — offline/CI]
-    O --> J[json-mode validation]
-    GE --> J
-    DM --> J
-```
-
-Providers are constructed **lazily** — the app boots with no API keys, and a
-missing/invalid provider raises `ProviderConfigurationError` only when a model
-is first requested. `demo` makes the whole stack runnable offline and in CI.
+学生 ID 不是鉴权。文档共享语料及部分读取接口没有生产多租户隔离，不能直接承载公网真实用户。详见 [deployment.md](deployment.md) 与 [security-audit.md](security-audit.md)。

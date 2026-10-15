@@ -1,0 +1,2003 @@
+{
+  "date": "2026-10-15",
+  "python": "3.13.14",
+  "platform": "win32",
+  "installed_distributions": 145,
+  "optional_resolved_distributions": 152,
+  "unique_package_versions": 168,
+  "not_declared": [],
+  "packages": [
+    {
+      "name": "aiohappyeyeballs",
+      "version": "2.7.1",
+      "license": "Python Software Foundation License",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/aiohappyeyeballs/2.7.1/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "aiohttp",
+      "version": "3.14.5",
+      "license": "Apache-2.0 AND MIT",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 2,
+      "source": "https://pypi.org/project/aiohttp/3.14.5/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "aiohttp-retry",
+      "version": "2.9.1",
+      "license": "MIT License",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/aiohttp-retry/2.9.1/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "aiosignal",
+      "version": "1.4.0",
+      "license": "Apache Software License",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/aiosignal/1.4.0/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "aiosqlite",
+      "version": "0.21.0",
+      "license": "MIT License",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/aiosqlite/0.21.0/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "altair",
+      "version": "6.3.0",
+      "license": "BSD License",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/altair/6.3.0/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "annotated-doc",
+      "version": "0.0.5",
+      "license": "MIT",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/annotated-doc/0.0.5/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "annotated-types",
+      "version": "0.8.0",
+      "license": "MIT",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/annotated-types/0.8.0/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "anyio",
+      "version": "4.15.1",
+      "license": "MIT",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/anyio/4.15.1/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "attrs",
+      "version": "26.1.0",
+      "license": "MIT",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/attrs/26.1.0/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "bcrypt",
+      "version": "5.0.0",
+      "license": "Apache Software License",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/bcrypt/5.0.0/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "build",
+      "version": "1.6.1",
+      "license": "MIT",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/build/1.6.1/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "certifi",
+      "version": "2026.7.22",
+      "license": "Mozilla Public License 2.0 (MPL 2.0)",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/certifi/2026.7.22/",
+      "copyleft_mentions": [
+        "MPL 2.0",
+        "MPL-2.0"
+      ]
+    },
+    {
+      "name": "cffi",
+      "version": "2.1.1",
+      "license": "MIT-0",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/cffi/2.1.1/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "charset-normalizer",
+      "version": "3.5.2",
+      "license": "MIT (distribution metadata)",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/charset-normalizer/3.5.2/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "chromadb",
+      "version": "1.5.9",
+      "license": "Apache Software License",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/chromadb/1.5.9/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "click",
+      "version": "8.5.0",
+      "license": "BSD-3-Clause",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/click/8.5.0/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "cloudpickle",
+      "version": "3.1.2",
+      "license": "BSD License",
+      "profiles": [
+        "optional-dry-run"
+      ],
+      "installed_license_files": 0,
+      "source": "https://pypi.org/project/cloudpickle/3.1.2/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "colorama",
+      "version": "0.4.6",
+      "license": "BSD License",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/colorama/0.4.6/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "cryptography",
+      "version": "50.0.2",
+      "license": "Apache-2.0 OR BSD-3-Clause",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 3,
+      "source": "https://pypi.org/project/cryptography/50.0.2/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "distro",
+      "version": "1.9.0",
+      "license": "Apache Software License",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/distro/1.9.0/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "durationpy",
+      "version": "0.11",
+      "license": "MIT (distribution metadata)",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/durationpy/0.11/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "fastapi",
+      "version": "0.143.0",
+      "license": "MIT",
+      "profiles": [
+        "installed-runtime-test"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/fastapi/0.143.0/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "fastapi",
+      "version": "0.143.1",
+      "license": "MIT",
+      "profiles": [
+        "optional-dry-run"
+      ],
+      "installed_license_files": 0,
+      "source": "https://pypi.org/project/fastapi/0.143.1/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "filelock",
+      "version": "4.1.1",
+      "license": "MIT",
+      "profiles": [
+        "installed-runtime-test"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/filelock/4.1.1/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "filelock",
+      "version": "4.2.0",
+      "license": "MIT",
+      "profiles": [
+        "optional-dry-run"
+      ],
+      "installed_license_files": 0,
+      "source": "https://pypi.org/project/filelock/4.2.0/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "filetype",
+      "version": "1.2.0",
+      "license": "MIT License",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/filetype/1.2.0/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "flatbuffers",
+      "version": "25.12.19",
+      "license": "Apache Software License",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 0,
+      "source": "https://pypi.org/project/flatbuffers/25.12.19/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "frozenlist",
+      "version": "1.8.0",
+      "license": "Apache (distribution metadata)",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/frozenlist/1.8.0/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "fsspec",
+      "version": "2026.9.0",
+      "license": "BSD-3-Clause",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/fsspec/2026.9.0/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "google-ai-generativelanguage",
+      "version": "0.12.1",
+      "license": "Apache Software License",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/google-ai-generativelanguage/0.12.1/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "google-api-core",
+      "version": "2.42.0",
+      "license": "Apache Software License",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/google-api-core/2.42.0/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "google-auth",
+      "version": "2.62.0",
+      "license": "Apache Software License",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/google-auth/2.62.0/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "googleapis-common-protos",
+      "version": "1.75.5",
+      "license": "Apache-2.0",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/googleapis-common-protos/1.75.5/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "grpcio",
+      "version": "1.84.0",
+      "license": "Apache-2.0",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/grpcio/1.84.0/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "grpcio-status",
+      "version": "1.84.0",
+      "license": "Apache-2.0",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/grpcio-status/1.84.0/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "h11",
+      "version": "0.16.0",
+      "license": "MIT License",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/h11/0.16.0/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "hf-xet",
+      "version": "1.7.0",
+      "license": "Apache-2.0",
+      "profiles": [
+        "installed-runtime-test"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/hf-xet/1.7.0/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "httpcore",
+      "version": "1.0.9",
+      "license": "BSD-3-Clause",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/httpcore/1.0.9/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "httpcore2",
+      "version": "2.13.1",
+      "license": "BSD-3-Clause",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/httpcore2/2.13.1/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "httptools",
+      "version": "0.9.0",
+      "license": "MIT",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 3,
+      "source": "https://pypi.org/project/httptools/0.9.0/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "httpx",
+      "version": "0.28.1",
+      "license": "BSD License",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/httpx/0.28.1/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "httpx2",
+      "version": "2.13.1",
+      "license": "BSD-3-Clause",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/httpx2/2.13.1/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "huggingface_hub",
+      "version": "0.36.2",
+      "license": "Apache Software License",
+      "profiles": [
+        "optional-dry-run"
+      ],
+      "installed_license_files": 0,
+      "source": "https://pypi.org/project/huggingface_hub/0.36.2/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "huggingface_hub",
+      "version": "2.2.0",
+      "license": "Apache Software License",
+      "profiles": [
+        "installed-runtime-test"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/huggingface_hub/2.2.0/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "idna",
+      "version": "3.20",
+      "license": "BSD-3-Clause",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/idna/3.20/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "importlib_resources",
+      "version": "7.1.0",
+      "license": "Apache-2.0",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/importlib_resources/7.1.0/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "iniconfig",
+      "version": "2.3.1",
+      "license": "MIT",
+      "profiles": [
+        "installed-runtime-test"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/iniconfig/2.3.1/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "itsdangerous",
+      "version": "2.2.0",
+      "license": "BSD License",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/itsdangerous/2.2.0/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "Jinja2",
+      "version": "3.1.6",
+      "license": "BSD License",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/Jinja2/3.1.6/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "jiter",
+      "version": "0.17.0",
+      "license": "MIT",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/jiter/0.17.0/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "joblib",
+      "version": "1.6.0",
+      "license": "BSD-3-Clause",
+      "profiles": [
+        "optional-dry-run"
+      ],
+      "installed_license_files": 0,
+      "source": "https://pypi.org/project/joblib/1.6.0/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "jsonpatch",
+      "version": "1.35",
+      "license": "BSD-3-Clause",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 2,
+      "source": "https://pypi.org/project/jsonpatch/1.35/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "jsonpointer",
+      "version": "3.2.1",
+      "license": "BSD License",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 2,
+      "source": "https://pypi.org/project/jsonpointer/3.2.1/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "jsonschema",
+      "version": "4.26.0",
+      "license": "MIT",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/jsonschema/4.26.0/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "jsonschema-specifications",
+      "version": "2025.9.1",
+      "license": "MIT",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/jsonschema-specifications/2025.9.1/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "kubernetes",
+      "version": "37.0.1",
+      "license": "Apache-2.0",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/kubernetes/37.0.1/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "langchain",
+      "version": "0.3.30",
+      "license": "MIT (distribution metadata)",
+      "profiles": [
+        "optional-dry-run"
+      ],
+      "installed_license_files": 0,
+      "source": "https://pypi.org/project/langchain/0.3.30/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "langchain-core",
+      "version": "0.3.86",
+      "license": "MIT (distribution metadata)",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 0,
+      "source": "https://pypi.org/project/langchain-core/0.3.86/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "langchain-google-genai",
+      "version": "2.1.12",
+      "license": "MIT (distribution metadata)",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/langchain-google-genai/2.1.12/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "langchain-openai",
+      "version": "0.3.35",
+      "license": "MIT (distribution metadata)",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/langchain-openai/0.3.35/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "langchain-text-splitters",
+      "version": "0.3.11",
+      "license": "MIT (distribution metadata)",
+      "profiles": [
+        "optional-dry-run"
+      ],
+      "installed_license_files": 0,
+      "source": "https://pypi.org/project/langchain-text-splitters/0.3.11/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "langgraph",
+      "version": "0.6.11",
+      "license": "MIT",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/langgraph/0.6.11/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "langgraph-checkpoint",
+      "version": "2.1.2",
+      "license": "MIT",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/langgraph-checkpoint/2.1.2/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "langgraph-checkpoint-sqlite",
+      "version": "2.0.11",
+      "license": "MIT",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 0,
+      "source": "https://pypi.org/project/langgraph-checkpoint-sqlite/2.0.11/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "langgraph-prebuilt",
+      "version": "0.6.5",
+      "license": "MIT",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/langgraph-prebuilt/0.6.5/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "langgraph-sdk",
+      "version": "0.2.15",
+      "license": "MIT",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/langgraph-sdk/0.2.15/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "langsmith",
+      "version": "0.14.8",
+      "license": "MIT (distribution metadata)",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 0,
+      "source": "https://pypi.org/project/langsmith/0.14.8/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "markdown-it-py",
+      "version": "4.2.0",
+      "license": "MIT License",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 2,
+      "source": "https://pypi.org/project/markdown-it-py/4.2.0/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "MarkupSafe",
+      "version": "3.0.4",
+      "license": "BSD-3-Clause",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/MarkupSafe/3.0.4/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "mdurl",
+      "version": "0.1.2",
+      "license": "MIT License",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/mdurl/0.1.2/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "mmh3",
+      "version": "5.3.1",
+      "license": "MIT License",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/mmh3/5.3.1/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "mpmath",
+      "version": "1.3.0",
+      "license": "BSD License",
+      "profiles": [
+        "optional-dry-run"
+      ],
+      "installed_license_files": 0,
+      "source": "https://pypi.org/project/mpmath/1.3.0/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "multidict",
+      "version": "7.1.0",
+      "license": "Apache-2.0",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/multidict/7.1.0/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "narwhals",
+      "version": "2.27.1",
+      "license": "MIT",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/narwhals/2.27.1/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "networkx",
+      "version": "3.7",
+      "license": "BSD-3-Clause",
+      "profiles": [
+        "optional-dry-run"
+      ],
+      "installed_license_files": 0,
+      "source": "https://pypi.org/project/networkx/3.7/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "numpy",
+      "version": "2.5.4",
+      "license": "BSD-3-Clause AND 0BSD AND MIT AND Zlib AND CC0-1.0",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 20,
+      "source": "https://pypi.org/project/numpy/2.5.4/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "oauthlib",
+      "version": "4.0.0",
+      "license": "BSD (distribution metadata)",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/oauthlib/4.0.0/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "onnxruntime",
+      "version": "1.31.0",
+      "license": "MIT License",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 2,
+      "source": "https://pypi.org/project/onnxruntime/1.31.0/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "openai",
+      "version": "2.54.0",
+      "license": "Apache Software License",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/openai/2.54.0/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "opentelemetry-api",
+      "version": "1.45.1",
+      "license": "Apache-2.0",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/opentelemetry-api/1.45.1/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "opentelemetry-exporter-otlp-common",
+      "version": "0.66b1",
+      "license": "Apache-2.0",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/opentelemetry-exporter-otlp-common/0.66b1/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "opentelemetry-exporter-otlp-proto-common",
+      "version": "1.45.1",
+      "license": "Apache-2.0",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/opentelemetry-exporter-otlp-proto-common/1.45.1/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "opentelemetry-exporter-otlp-proto-grpc",
+      "version": "1.45.1",
+      "license": "Apache-2.0",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/opentelemetry-exporter-otlp-proto-grpc/1.45.1/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "opentelemetry-proto",
+      "version": "1.45.1",
+      "license": "Apache-2.0",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/opentelemetry-proto/1.45.1/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "opentelemetry-sdk",
+      "version": "1.45.1",
+      "license": "Apache-2.0",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/opentelemetry-sdk/1.45.1/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "opentelemetry-semantic-conventions",
+      "version": "0.66b1",
+      "license": "Apache-2.0",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/opentelemetry-semantic-conventions/0.66b1/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "orjson",
+      "version": "3.13.0",
+      "license": "MPL-2.0 AND (Apache-2.0 OR MIT)",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 3,
+      "source": "https://pypi.org/project/orjson/3.13.0/",
+      "copyleft_mentions": [
+        "MPL 2.0",
+        "MPL-2.0"
+      ]
+    },
+    {
+      "name": "ormsgpack",
+      "version": "1.12.2",
+      "license": "Apache-2.0 OR MIT",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 4,
+      "source": "https://pypi.org/project/ormsgpack/1.12.2/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "overrides",
+      "version": "7.7.0",
+      "license": "Apache (distribution metadata)",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/overrides/7.7.0/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "packaging",
+      "version": "25.0",
+      "license": "Apache Software License; BSD License",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 7,
+      "source": "https://pypi.org/project/packaging/25.0/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "pandas",
+      "version": "2.3.3",
+      "license": "BSD License",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/pandas/2.3.3/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "pillow",
+      "version": "12.3.0",
+      "license": "MIT-CMU",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/pillow/12.3.0/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "pip",
+      "version": "26.1.2",
+      "license": "MIT",
+      "profiles": [
+        "installed-runtime-test"
+      ],
+      "installed_license_files": 46,
+      "source": "https://pypi.org/project/pip/26.1.2/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "plotly",
+      "version": "6.9.0",
+      "license": "MIT",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 5,
+      "source": "https://pypi.org/project/plotly/6.9.0/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "pluggy",
+      "version": "1.6.0",
+      "license": "MIT License",
+      "profiles": [
+        "installed-runtime-test"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/pluggy/1.6.0/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "propcache",
+      "version": "0.5.4",
+      "license": "Apache (distribution metadata)",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 2,
+      "source": "https://pypi.org/project/propcache/0.5.4/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "proto-plus",
+      "version": "1.29.0",
+      "license": "Apache Software License",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/proto-plus/1.29.0/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "protobuf",
+      "version": "7.36.2",
+      "license": "BSD (distribution metadata)",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/protobuf/7.36.2/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "pyarrow",
+      "version": "25.0.1",
+      "license": "Apache-2.0",
+      "profiles": [
+        "installed-runtime-test"
+      ],
+      "installed_license_files": 2,
+      "source": "https://pypi.org/project/pyarrow/25.0.1/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "pyarrow",
+      "version": "26.0.0",
+      "license": "Apache-2.0",
+      "profiles": [
+        "optional-dry-run"
+      ],
+      "installed_license_files": 0,
+      "source": "https://pypi.org/project/pyarrow/26.0.0/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "pyasn1",
+      "version": "0.6.4",
+      "license": "BSD (distribution metadata)",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/pyasn1/0.6.4/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "pyasn1_modules",
+      "version": "0.4.2",
+      "license": "BSD License",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/pyasn1_modules/0.4.2/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "pybase64",
+      "version": "1.5.1",
+      "license": "BSD-2-Clause",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 5,
+      "source": "https://pypi.org/project/pybase64/1.5.1/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "pycparser",
+      "version": "3.11",
+      "license": "BSD-3-Clause",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/pycparser/3.11/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "pydantic",
+      "version": "2.14.1",
+      "license": "MIT",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/pydantic/2.14.1/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "pydantic_core",
+      "version": "2.50.1",
+      "license": "MIT",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/pydantic_core/2.50.1/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "pydantic-settings",
+      "version": "2.15.0",
+      "license": "MIT",
+      "profiles": [
+        "installed-runtime-test"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/pydantic-settings/2.15.0/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "pydantic-settings",
+      "version": "2.16.0",
+      "license": "MIT",
+      "profiles": [
+        "optional-dry-run"
+      ],
+      "installed_license_files": 0,
+      "source": "https://pypi.org/project/pydantic-settings/2.16.0/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "pydeck",
+      "version": "0.9.3",
+      "license": "Apache (distribution metadata)",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/pydeck/0.9.3/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "Pygments",
+      "version": "2.21.0",
+      "license": "BSD-2-Clause",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 2,
+      "source": "https://pypi.org/project/Pygments/2.21.0/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "pymupdf",
+      "version": "1.28.2",
+      "license": "AGPL v3 / commercial (official terms)",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/pymupdf/1.28.2/",
+      "copyleft_mentions": [
+        "GPL 3.0"
+      ]
+    },
+    {
+      "name": "PyPika",
+      "version": "0.51.1",
+      "license": "Apache Software License",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/PyPika/0.51.1/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "pyproject_hooks",
+      "version": "1.3.3",
+      "license": "MIT",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/pyproject_hooks/1.3.3/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "pytest",
+      "version": "8.4.2",
+      "license": "MIT License",
+      "profiles": [
+        "installed-runtime-test"
+      ],
+      "installed_license_files": 2,
+      "source": "https://pypi.org/project/pytest/8.4.2/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "pytest-asyncio",
+      "version": "0.26.0",
+      "license": "Apache-2.0",
+      "profiles": [
+        "installed-runtime-test"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/pytest-asyncio/0.26.0/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "python-dateutil",
+      "version": "2.9.0.post0",
+      "license": "BSD License; Apache Software License",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/python-dateutil/2.9.0.post0/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "python-dotenv",
+      "version": "1.2.4",
+      "license": "BSD (distribution metadata)",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/python-dotenv/1.2.4/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "python-multipart",
+      "version": "0.0.32",
+      "license": "Apache-2.0",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/python-multipart/0.0.32/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "pytz",
+      "version": "2026.5",
+      "license": "MIT License",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/pytz/2026.5/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "PyYAML",
+      "version": "6.0.3",
+      "license": "MIT License",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/PyYAML/6.0.3/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "referencing",
+      "version": "0.37.0",
+      "license": "MIT",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/referencing/0.37.0/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "regex",
+      "version": "2026.9.29",
+      "license": "Apache-2.0 AND CNRI-Python",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/regex/2026.9.29/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "requests",
+      "version": "2.34.2",
+      "license": "Apache Software License",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 2,
+      "source": "https://pypi.org/project/requests/2.34.2/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "requests-oauthlib",
+      "version": "2.0.0",
+      "license": "BSD License",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/requests-oauthlib/2.0.0/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "requests-toolbelt",
+      "version": "1.0.0",
+      "license": "Apache Software License",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/requests-toolbelt/1.0.0/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "rich",
+      "version": "15.0.0",
+      "license": "MIT License",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/rich/15.0.0/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "rpds-py",
+      "version": "2026.9.1",
+      "license": "MIT",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/rpds-py/2026.9.1/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "ruff",
+      "version": "0.17.0",
+      "license": "MIT",
+      "profiles": [
+        "installed-runtime-test"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/ruff/0.17.0/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "safetensors",
+      "version": "0.8.0",
+      "license": "Apache Software License",
+      "profiles": [
+        "optional-dry-run"
+      ],
+      "installed_license_files": 0,
+      "source": "https://pypi.org/project/safetensors/0.8.0/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "scikit-learn",
+      "version": "1.9.1",
+      "license": "BSD-3-Clause",
+      "profiles": [
+        "optional-dry-run"
+      ],
+      "installed_license_files": 0,
+      "source": "https://pypi.org/project/scikit-learn/1.9.1/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "scipy",
+      "version": "1.18.1",
+      "license": "BSD License",
+      "profiles": [
+        "optional-dry-run"
+      ],
+      "installed_license_files": 0,
+      "source": "https://pypi.org/project/scipy/1.18.1/",
+      "copyleft_mentions": [
+        "GPL",
+        "GPL-3.0",
+        "GPLv3",
+        "lgpl"
+      ]
+    },
+    {
+      "name": "sentence-transformers",
+      "version": "4.1.0",
+      "license": "Apache Software License",
+      "profiles": [
+        "optional-dry-run"
+      ],
+      "installed_license_files": 0,
+      "source": "https://pypi.org/project/sentence-transformers/4.1.0/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "setuptools",
+      "version": "84.0.0",
+      "license": "MIT",
+      "profiles": [
+        "optional-dry-run"
+      ],
+      "installed_license_files": 0,
+      "source": "https://pypi.org/project/setuptools/84.0.0/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "shellingham",
+      "version": "1.5.4",
+      "license": "ISC License (ISCL)",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/shellingham/1.5.4/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "six",
+      "version": "1.17.0",
+      "license": "MIT License",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/six/1.17.0/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "sniffio",
+      "version": "1.3.1",
+      "license": "MIT License; Apache Software License",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 3,
+      "source": "https://pypi.org/project/sniffio/1.3.1/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "SQLAlchemy",
+      "version": "2.1.4",
+      "license": "MIT",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 2,
+      "source": "https://pypi.org/project/SQLAlchemy/2.1.4/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "sqlite-vec",
+      "version": "0.1.9",
+      "license": "Apache (distribution metadata)",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 0,
+      "source": "https://pypi.org/project/sqlite-vec/0.1.9/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "starlette",
+      "version": "1.7.0",
+      "license": "BSD-3-Clause",
+      "profiles": [
+        "installed-runtime-test"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/starlette/1.7.0/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "starlette",
+      "version": "1.8.0",
+      "license": "BSD-3-Clause",
+      "profiles": [
+        "optional-dry-run"
+      ],
+      "installed_license_files": 0,
+      "source": "https://pypi.org/project/starlette/1.8.0/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "streamlit",
+      "version": "1.65.0",
+      "license": "Apache-2.0",
+      "profiles": [
+        "installed-runtime-test"
+      ],
+      "installed_license_files": 0,
+      "source": "https://pypi.org/project/streamlit/1.65.0/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "streamlit",
+      "version": "1.66.0",
+      "license": "Apache-2.0",
+      "profiles": [
+        "optional-dry-run"
+      ],
+      "installed_license_files": 0,
+      "source": "https://pypi.org/project/streamlit/1.66.0/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "sympy",
+      "version": "1.14.0",
+      "license": "BSD License",
+      "profiles": [
+        "optional-dry-run"
+      ],
+      "installed_license_files": 0,
+      "source": "https://pypi.org/project/sympy/1.14.0/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "tenacity",
+      "version": "9.2.1",
+      "license": "Apache-2.0",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/tenacity/9.2.1/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "threadpoolctl",
+      "version": "3.7.0",
+      "license": "BSD-3-Clause",
+      "profiles": [
+        "optional-dry-run"
+      ],
+      "installed_license_files": 0,
+      "source": "https://pypi.org/project/threadpoolctl/3.7.0/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "tiktoken",
+      "version": "0.14.0",
+      "license": "MIT (distribution metadata)",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/tiktoken/0.14.0/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "tokenizers",
+      "version": "0.22.2",
+      "license": "Apache Software License",
+      "profiles": [
+        "optional-dry-run"
+      ],
+      "installed_license_files": 0,
+      "source": "https://pypi.org/project/tokenizers/0.22.2/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "tokenizers",
+      "version": "0.23.3",
+      "license": "Apache Software License",
+      "profiles": [
+        "installed-runtime-test"
+      ],
+      "installed_license_files": 0,
+      "source": "https://pypi.org/project/tokenizers/0.23.3/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "toml",
+      "version": "0.10.2",
+      "license": "MIT License",
+      "profiles": [
+        "installed-runtime-test"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/toml/0.10.2/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "torch",
+      "version": "2.14.1",
+      "license": "Apache-2.0 AND Apache-2.0 WITH LLVM-exception AND BSD-2-Clause AND BSD-3-Clause AND BSL-1.0 AND MIT",
+      "profiles": [
+        "optional-dry-run"
+      ],
+      "installed_license_files": 0,
+      "source": "https://pypi.org/project/torch/2.14.1/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "tqdm",
+      "version": "4.70.1",
+      "license": "MIT (distribution metadata)",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/tqdm/4.70.1/",
+      "copyleft_mentions": [
+        "MPL-2.0"
+      ]
+    },
+    {
+      "name": "transformers",
+      "version": "4.57.6",
+      "license": "Apache Software License",
+      "profiles": [
+        "optional-dry-run"
+      ],
+      "installed_license_files": 0,
+      "source": "https://pypi.org/project/transformers/4.57.6/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "truststore",
+      "version": "0.10.5",
+      "license": "MIT",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/truststore/0.10.5/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "typer",
+      "version": "0.27.3",
+      "license": "MIT",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 2,
+      "source": "https://pypi.org/project/typer/0.27.3/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "typing_extensions",
+      "version": "4.16.0",
+      "license": "PSF-2.0",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/typing_extensions/4.16.0/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "typing-inspection",
+      "version": "0.4.4",
+      "license": "MIT",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/typing-inspection/0.4.4/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "tzdata",
+      "version": "2026.5",
+      "license": "Apache (distribution metadata)",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 2,
+      "source": "https://pypi.org/project/tzdata/2026.5/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "urllib3",
+      "version": "2.8.0",
+      "license": "MIT",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/urllib3/2.8.0/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "uuid_utils",
+      "version": "0.17.1",
+      "license": "BSD-3-Clause",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/uuid_utils/0.17.1/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "uvicorn",
+      "version": "0.54.0",
+      "license": "BSD-3-Clause",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/uvicorn/0.54.0/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "watchdog",
+      "version": "6.0.0",
+      "license": "Apache Software License",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 2,
+      "source": "https://pypi.org/project/watchdog/6.0.0/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "watchfiles",
+      "version": "1.3.0",
+      "license": "MIT License",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/watchfiles/1.3.0/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "websocket-client",
+      "version": "1.9.2",
+      "license": "Apache (distribution metadata)",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/websocket-client/1.9.2/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "websockets",
+      "version": "17.2",
+      "license": "BSD-3-Clause",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/websockets/17.2/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "xxhash",
+      "version": "4.0.1",
+      "license": "BSD (distribution metadata)",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/xxhash/4.0.1/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "yarl",
+      "version": "1.25.1",
+      "license": "Apache (distribution metadata)",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 2,
+      "source": "https://pypi.org/project/yarl/1.25.1/",
+      "copyleft_mentions": []
+    },
+    {
+      "name": "zstandard",
+      "version": "0.25.0",
+      "license": "BSD-3-Clause",
+      "profiles": [
+        "installed-runtime-test",
+        "optional-dry-run"
+      ],
+      "installed_license_files": 1,
+      "source": "https://pypi.org/project/zstandard/0.25.0/",
+      "copyleft_mentions": []
+    }
+  ]
+}

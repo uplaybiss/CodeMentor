@@ -7,6 +7,7 @@ import logging
 from pydantic import BaseModel, Field
 
 from agents.base import (
+    call_tool,
     memory_prompt_section,
     profile_prompt_section,
     student_profile_from_state,
@@ -35,7 +36,7 @@ class MemoryAgent:
     async def run(self, state: dict) -> dict:
         student_id = state.get("student_id") or "anonymous"
         user_input = (state.get("user_input") or "").strip()
-        profile = student_profile_from_state(state, self._ctx)
+        profile = await student_profile_from_state({**state, "_task": self.name}, self._ctx)
 
         assistant_text = "\n".join(
             m.get("content", "")
@@ -57,32 +58,27 @@ class MemoryAgent:
             f"{profile_prompt_section(profile)}\n\n"
             f"{memory_prompt_section(self._ctx, student_id, limit=6)}"
         )
-        output = await self._ctx.llm.generate_json(
-            render_prompt("memory"),
-            user_prompt,
+        output = await call_tool(
+            self._ctx,
+            self.name,
+            "llm.json",
+            student_id=student_id,
+            system=render_prompt("memory"),
+            user=user_prompt,
             model_class=MemoryExtraction,
         )
 
-        # Persist extracted facts.
-        payload: list[dict] = []
-        for fact in output.facts:
-            self._ctx.memory_repo.add_fact(
-                student_id,
-                fact.fact_type.value,
-                fact.content,
-                fact.importance,
-            )
-            payload.append(fact.model_dump())
-            logger.debug("Stored memory fact [%s]: %s", fact.fact_type.value, fact.content)
-
-        # Persist the conversation transcript (only for real user turns).
-        if user_input:
-            self._ctx.conversation_repo.add_message(student_id, "user", user_input)
-        for message in state.get("messages") or []:
-            if message.get("role") == "assistant" and message.get("content"):
-                self._ctx.conversation_repo.add_message(
-                    student_id, "assistant", message["content"]
-                )
+        saved = await call_tool(
+            self._ctx,
+            self.name,
+            "memory.save",
+            student_id=student_id,
+            facts=output.facts,
+            messages=list(state.get("messages") or []),
+            user_input=user_input,
+            topic=state.get("topic") or "general",
+        )
+        payload = saved["facts"]
 
         logger.info("Memory agent stored %d fact(s) for student %s", len(payload), student_id)
         return {"memory_updates": payload}

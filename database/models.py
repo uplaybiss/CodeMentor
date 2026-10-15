@@ -191,3 +191,46 @@ class ProgressSnapshot(Base):
     topic: Mapped[str] = mapped_column(String(256))
     score: Mapped[float] = mapped_column(Float, default=0.0)
     created_at: Mapped[str] = mapped_column(String(32))
+
+
+class HarnessRun(Base):
+    """Run ownership/status; graph snapshots belong to LangGraph's own saver."""
+
+    __tablename__ = "harness_runs"
+    thread_id: Mapped[str] = mapped_column(String(64), primary_key=True)
+    student_id: Mapped[str] = mapped_column(ForeignKey("students.id"), index=True)
+    session_id: Mapped[str] = mapped_column(String(64))
+    run_id: Mapped[str] = mapped_column(String(64))
+    workflow: Mapped[str] = mapped_column(String(16))
+    input_hash: Mapped[str] = mapped_column(String(64))
+    status: Mapped[str] = mapped_column(String(16), default="running")
+    tool_calls: Mapped[int] = mapped_column(Integer, default=0)
+    result: Mapped[dict] = mapped_column(JSON, default=dict)
+    error: Mapped[dict] = mapped_column(JSON, default=dict)
+    created_at: Mapped[str] = mapped_column(String(32))
+    updated_at: Mapped[str] = mapped_column(String(32))
+
+
+class HarnessEffect(Base):
+    """Atomic local write + cached result, scoped to a graph node invocation."""
+
+    __tablename__ = "harness_effects"
+    effect_id: Mapped[str] = mapped_column(String(64), primary_key=True)
+    student_id: Mapped[str] = mapped_column(ForeignKey("students.id"))
+    tool_name: Mapped[str] = mapped_column(String(64))
+    result: Mapped[dict] = mapped_column(JSON)
+    created_at: Mapped[str] = mapped_column(String(32))
+
+
+class WrongAnswer(Base):
+    """Bounded topic-specific context can query actual mistakes, not all history."""
+
+    __tablename__ = "wrong_answers"
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    student_id: Mapped[str] = mapped_column(ForeignKey("students.id"), index=True)
+    topic: Mapped[str] = mapped_column(String(256), index=True)
+    quiz_id: Mapped[str] = mapped_column(ForeignKey("quizzes.id"))
+    question: Mapped[str] = mapped_column(Text)
+    submitted: Mapped[str] = mapped_column(Text)
+    explanation: Mapped[str] = mapped_column(Text)
+    created_at: Mapped[str] = mapped_column(String(32))

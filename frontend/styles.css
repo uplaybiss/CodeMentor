@@ -1,0 +1,56 @@
+:root { --cm-blue: #2563eb; --cm-ink: #162743; --cm-muted: #64748b; }
+html, body, [class*="css"], .stApp {
+  font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", sans-serif;
+}
+.stApp { background: #f6f9ff; color: var(--cm-ink); }
+[data-testid="stMainBlockContainer"] { max-width: 1200px; padding-top: 4.5rem; padding-bottom: 3rem; }
+[data-testid="stSidebar"] { background: #ffffff; border-right: 1px solid #e5ecf7; }
+[data-testid="stSidebarContent"] { padding: 1.8rem 1.2rem; }
+[data-testid="stSidebar"] [data-testid="stRadio"] label { padding: .55rem .5rem; border-radius: 9px; }
+[data-testid="stSidebar"] [data-testid="stRadio"] label:has(input:checked) { background: #edf3ff; color: #2563eb; font-weight: 600; }
+.brand { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+.brand-symbol { background: linear-gradient(135deg, #2563eb, #60a5fa); color: white;
+  border-radius: 12px; padding: 12px 8px; font-weight: 700; letter-spacing: -1px; }
+.brand strong { font-size: 22px; letter-spacing: -.6px; }
+.brand small { display: block; color: #64748b; font-size: 11px; margin-top: 4px; }
+.hero { padding: 32px 36px; border: 1px solid #dce8ff; border-radius: 20px;
+  background: linear-gradient(110deg, #eaf2ff, #f1f7ff 70%, #effafc); margin: 8px 0 20px; }
+.eyebrow { color: #2563eb; font-size: 13px; letter-spacing: 2px; font-weight: 600; }
+.hero h1 { color: #17335c; font-size: clamp(26px, 3vw, 38px); margin: 10px 0; font-weight: 700; }
+.hero p, .page-heading p { color: #64748b; font-size: 15px; line-height: 1.8; margin: 0; }
+.page-heading { margin: 8px 0 22px; }
+.page-heading h1 { font-size: 30px; margin: 0 0 8px; }
+.sidebar-note { margin-top: 30px; color: #94a3b8; font-size: 12px; line-height: 2; }
+[data-testid="stMetric"] { background: #fff; border-radius: 14px; border-color: #e1e9f5; padding: 18px; }
+[data-testid="stMetricValue"] { font-size: clamp(18px, 1.9vw, 27px); }
+[data-testid="stMetricLabel"] [data-testid="stMarkdownContainer"],
+[data-testid="stMetricValue"] [data-testid="stMarkdownContainer"],
+[data-testid="stMetricLabel"] p, [data-testid="stMetricValue"] p { white-space: normal; }
+[data-testid="stVerticalBlockBorderWrapper"] { background: #fff; border-radius: 16px; border-color: #e1e9f5; }
+[data-testid="stChatMessage"] { background: #fff; border: 1px solid #e2eaf7; border-radius: 16px; }
+[data-testid="stChatInput"] { border-radius: 14px; }
+.stButton > button, .stFormSubmitButton > button { border-radius: 10px; min-height: 42px; }
+h2 { font-size: 22px !important; padding-top: 8px !important; }
+h3 { font-size: 19px !important; }
+h4 { font-size: 17px !important; }
+pre, code { font-family: Consolas, "SFMono-Regular", monospace !important; }
+/* Keep the toolbar's sidebar toggle available when the browser is narrow. */
+[data-testid="stToolbar"] [data-testid="stBaseButton-header"],
+[data-testid="stMainMenu"], [data-testid="stMainMenuButton"] { display: none; }
+/* Only the native uploader's built-in English decoration is replaced. */
+[data-testid="stFileUploaderDropzoneInstructions"] { font-size: 0; }
+[data-testid="stFileUploaderDropzoneInstructions"]::after { content: "将文件拖到这里，或点击选择文件"; font-size: 14px; }
+[data-testid="stFileUploaderDropzone"] button { font-size: 0; }
+[data-testid="stFileUploaderDropzone"] button::after { content: "选择文件"; font-size: 14px; }
+@media (max-width: 1100px) {
+  [data-testid="stHorizontalBlock"]:has(> [data-testid="stColumn"] [data-testid="stMetric"]) { flex-wrap: wrap; }
+  [data-testid="stHorizontalBlock"]:has(> [data-testid="stColumn"] [data-testid="stMetric"]) > [data-testid="stColumn"] {
+    flex-basis: calc(50% - 1rem); min-width: calc(50% - 1rem);
+  }
+  [data-testid="stMetric"] { padding: 12px; min-height: 105px; }
+}
+@media (max-width: 900px) {
+  [data-testid="stMainBlockContainer"] { padding: 4.5rem 1rem 1rem; }
+  .hero { padding: 24px; }
+  [data-testid="stMetric"] { padding: 12px; }
+}

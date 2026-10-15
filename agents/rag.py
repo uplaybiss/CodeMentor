@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import logging
 
+from agents.base import call_tool
 from agents.context import AgentContext
 
 logger = logging.getLogger(__name__)
@@ -26,7 +27,13 @@ class RAGAgent:
                 "rag_sources": [],
             }
 
-        context = self._ctx.rag.build_context(query)
+        context = await call_tool(
+            self._ctx,
+            self.name,
+            "rag.context",
+            student_id=state.get("student_id") or "anonymous",
+            query=query,
+        )
         sources = list(dict.fromkeys(c.source for c in context.retrieved_chunks))
         logger.info(
             "RAG retrieved %d chunk(s) for %r (sources: %s)",

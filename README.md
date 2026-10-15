@@ -1,238 +1,145 @@
-# 🎓 EduAgent — AI Personal Tutoring Assistant
+# CodeMentor｜AI 个性化编程学习助手
 
-<p align="center">
-  <a href="https://github.com/Varsha-art126/EduAgent/actions/workflows/ci.yml"><img src="https://github.com/Varsha-art126/EduAgent/actions/workflows/ci.yml/badge.svg" alt="Tests"></a>
-  <a href="https://www.python.org/"><img src="https://img.shields.io/badge/Python-3.11%2B-3776AB?logo=python&logoColor=white" alt="Python 3.11+"></a>
-  <a href="https://langchain-ai.github.io/langgraph/"><img src="https://img.shields.io/badge/LangGraph-Agent%20Framework-1C3C3C" alt="LangGraph"></a>
-  <a href="https://fastapi.tiangolo.com/"><img src="https://img.shields.io/badge/FastAPI-009688?logo=fastapi&logoColor=white" alt="FastAPI"></a>
-  <a href="https://streamlit.io/"><img src="https://img.shields.io/badge/Streamlit-FF4B4B?logo=streamlit&logoColor=white" alt="Streamlit"></a>
-  <a href="https://www.trychroma.com/"><img src="https://img.shields.io/badge/ChromaDB-RAG-DA5B0B" alt="ChromaDB RAG"></a>
-  <a href="https://www.sqlite.org/"><img src="https://img.shields.io/badge/SQLite-003B57?logo=sqlite&logoColor=white" alt="SQLite"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow" alt="MIT License"></a>
-</p>
+基于 **LangGraph + Agent Harness** 的 Python 编程学习项目：把讲解、练习、评分、学习记忆和下一步建议串成一次可追踪的学习过程。提供简体中文 Streamlit 工作台与 FastAPI 接口。
 
-EduAgent is a production-oriented AI tutoring system built on **LangGraph**, **FastAPI**, **Streamlit**, **SQLite**, and **ChromaDB**. It runs a multi-agent reasoning graph that plans each tutoring turn, teaches topics, generates practice quizzes, grades submissions, extracts long-term memory, and recommends next steps — all grounded in the student's own uploaded notes via retrieval-augmented generation (RAG).
+初学者常常遇到三个问题：讲解与练习脱节、历史问题难以复习、下一步学什么缺乏依据。CodeMentor 将这些环节接入同一份持久学习画像，并通过上下文预算、工具调用约束与运行检查点管理 Agent 执行。
 
-**📖 Documentation:** [Project Summary](docs/PROJECT_SUMMARY.md) · [Architecture & Diagrams](docs/architecture.md) · [RAG Experiments & Findings](experiments/findings.md)
+项目基于 MIT 许可的 [EduAgent](https://github.com/Varsha-art126/EduAgent) 扩展；上游基线为 `99ae1a3ea390acd202f8873a3608fab79ca0f6e3`。保留原作者版权与来源，详见 [LICENSE](LICENSE) 和 [第三方说明](THIRD_PARTY_NOTICES.md)。
 
-```
-┌────────────┐    ┌────────────┐    ┌────────────┐
-│  Streamlit │───▶│  FastAPI   │───▶│  LangGraph │
-│  frontend  │    │  /api/v1   │    │  workflow  │
-└────────────┘    └────────────┘    └─────┬──────┘
-                                          │
-              ┌────────────┬──────────────┼───────────────┐
-              ▼            ▼              ▼               ▼
-          ┌─────────┐  ┌────────┐   ┌────────────┐   ┌─────────┐
-          │ Planner │  │Teacher │   │ Quiz/Evalu │   │ Memory  │
-          │ RAG     │  │        │   │ Recommend  │   │         │
-          └─────────┘  └────────┘   └────────────┘   └─────────┘
-              │            │              │               │
-              ▼            ▼              ▼               ▼
-          ┌─────────┐  ┌────────┐   ┌────────────┐   ┌─────────┐
-          │ChromaDB │  │ SQLite │   │  LLM       │   │ .env    │
-          │(vectors)│  │ (ORM)  │   │ openai/    │   │ config  │
-          └─────────┘  └────────┘   │ gemini/    │   └─────────┘
-                                    │ demo       │
-                                    └────────────┘
-```
+## 当前功能
 
----
+| 功能 | 已实现行为 |
+| --- | --- |
+| 中文学习工作台 | 学习首页、AI 辅导、专项练习、学习画像、学习资料五页；中文空状态、错误提示和代码展示。 |
+| 六个编程主题 | Python 基础、递归、链表、二叉树、深度优先搜索、动态规划；内部主题 ID 保持原协议。 |
+| 讲解与测验 | 结构化讲解；5 道选择题、2 道数值题、1 道主观题；网页直接作答及逐题反馈。 |
+| 学习画像 | 实际测验总数、最近 50 次得分、当前薄弱知识点、已讲解主题与学习建议。 |
+| Context Builder | 按学生与主题从 SQL 筛选画像、近期记录和错题，在 token 预算内形成实际 Agent Prompt 上下文。 |
+| Tool Guard | 对注册工具执行节点权限、参数、归属、调用次数、重复调用和超时检查；本地写入通过 effect 记录去重。 |
+| Session Runtime | session/run 标识、请求冲突检查、持久检查点、暂停/恢复、已完成结果重放。 |
+| 可选文档检索 | 继承 TXT/Markdown/PDF 入库与检索能力；只有后端启用时才开放资料管理。轻量 Demo 默认关闭。 |
 
-## ✨ Features
+## 架构
 
-| Area | Capability |
-|---|---|
-| **Agentic tutoring** | LangGraph workflow with 7 nodes: `planner → (teach / quiz / answer) → memory → recommendation` |
-| **Lesson generation** | Structured explanations with examples, analogies, recap — tuned to the student's level & learning style |
-| **Adaptive quizzes** | Fixed-composition quizzes (5 MCQ + 2 numerical + 1 subjective) with auto-adapting difficulty |
-| **Deterministic grading** | Objective questions scored in code; subjective answers graded by the LLM with graceful fallback |
-| **Long-term memory** | Facts extracted after every turn (strengths, preferences, goals, misconceptions) and reused in later prompts |
-| **Recommendations** | Data-driven next-step suggestions from concept scores, weak areas and quiz history |
-| **RAG note-grounding** | Upload PDF/TXT/MD notes → chunked & embedded in ChromaDB → retrieved to ground every answer with page citations |
-| **Personal dashboard** | Score trends, weak concepts, topics learned, memory and recommendations in one Streamlit view |
-| **Offline demo mode** | Run the whole system without any API key via a deterministic demo LLM provider |
-| **API-first** | Full REST API under `/api/v1` with typed Pydantic schemas and consistent error responses |
-
----
-
-## 🧱 Architecture
-
-Full diagrams (system context, both LangGraph workflows, the RAG pipeline, the
-SQLite data model, and the chat sequence) live in
-**[`docs/architecture.md`](docs/architecture.md)**. A compact layout:
-
-```
-D:\EduAgent
-├── api/                  # FastAPI backend
-│   ├── main.py           #   app factory, lifespan, CORS
-│   ├── dependencies.py   #   DI: container & agent context
-│   ├── exception_handlers.py
-│   └── routers/          #   health, chat, students, quizzes, documents, dashboard
-├── agents/               # LangGraph nodes (one module per agent)
-│   ├── planner.py        #   intent classification + graph routing
-│   ├── teacher.py        #   lesson generation + persistence
-│   ├── quiz.py           #   quiz generation + persistence
-│   ├── evaluation.py     #   grading + student-model update
-│   ├── memory.py         #   fact extraction + transcript log
-│   ├── recommendation.py #   next-step suggestions
-│   ├── rag.py            #   retrieval + context assembly
-│   ├── context.py        #   AgentContext dataclass (DI into nodes)
-│   └── base.py           #   shared prompt-section helpers
-├── graphs/
-│   └── workflow.py       # build_tutoring_graph / build_evaluation_graph
-├── services/
-│   ├── llm_client.py     #   OpenAI / Gemini / demo providers (lazy init)
-│   ├── llm_demo.py       #   deterministic offline provider
-│   ├── container.py      #   process-wide dependency wiring
-│   └── rag/              #   chunking, embeddings, vector store, ingestion
-├── database/             # SQLAlchemy ORM + repositories
-│   └── repositories/     #   student, quiz, conversation, memory, lesson, doc, progress
-├── models/               # Pydantic schemas, enums, LangGraph state
-├── prompts/              # YAML prompt templates (string.Template)
-├── config/               # typed settings (pydantic-settings) + constants
-├── utils/                # logging, errors, helpers, async_retry
-├── frontend/             # Streamlit dashboard + httpx API client
-├── tests/                # pytest suite (unit + integration)
-├── main.py               # uvicorn entry point
-└── requirements*.txt
+```mermaid
+flowchart TD
+    UI[Streamlit 中文学习工作台] --> API[FastAPI]
+    API --> Runtime[Session Runtime]
+    Runtime --> Graph[LangGraph 教学图 / 测评图]
+    Graph --> Harness[Agent Harness 节点包装]
+    Harness --> Context[Context Builder]
+    Harness --> Guard[Tool Guard]
+    Guard --> Tools[注册工具：LLM / Repository / RAG]
+    Tools --> DB[(SQLite 学习数据与 effect)]
+    Runtime --> Checkpoint[(SQLite Checkpointer)]
+    Tools --> Provider[Demo / OpenAI / Gemini]
+    Tools --> RAG[可选 Chroma 与 Embedding]
 ```
 
-### How a tutoring turn flows
+完整图路由、职责及限制见 [docs/architecture.md](docs/architecture.md)。
 
-1. **Planner** classifies intent (`learn` / `practice` / `answer_question` / `general`) and picks the topic.
-2. **Teacher** (optionally after **RAG**) generates a structured lesson and persists it.
-3. **Quiz** agent (when `with_quiz`) generates a fixed-composition quiz; **answer IDs** are deterministic.
-4. **Memory** extracts durable facts and logs the transcript.
-5. **Recommendation** suggests the next topic from the updated student model.
+## 快速开始：无需模型密钥
 
-A separate **evaluation graph** (`evaluation → memory → recommendation`) grades quiz submissions: MCQ/numerical scored in code, the written answer graded by the LLM, and every result persisted to the student model.
-
----
-
-## 🚀 Quickstart
-
-### 1. Prerequisites
-
-- Python **3.11 – 3.12** (3.13+/3.14 may lack wheels for `torch`/`sentence-transformers`)
-- (Optional) API keys for [OpenAI](https://platform.openai.com/) or [Google Gemini](https://aistudio.google.com/)
-
-### 2. Install
+使用 Python **3.13**，获取源码后进入项目根目录：
 
 ```bash
-python -m venv .venv
-source .venv/bin/activate        # Windows: .venv\Scripts\activate
-pip install -r requirements.txt
-pip install -r requirements-dev.txt   # for tests/linting
+git clone https://github.com/uplaybiss/CodeMentor.git
+cd CodeMentor
 ```
 
-### 3. Configure
+**Windows PowerShell：**
+
+```powershell
+py -3.13 -m venv .venv
+.\.venv\Scripts\python.exe -X utf8 -m pip install -r requirements-local.txt -r requirements-frontend.txt -c requirements-verified.txt
+$env:TIKTOKEN_CACHE_DIR = Join-Path (Get-Location) 'demo/token_cache'
+.\.venv\Scripts\python.exe -X utf8 -c "import tiktoken; tiktoken.get_encoding('cl100k_base')"
+if (-not (Test-Path -LiteralPath '.env')) { Copy-Item .env.example .env }
+```
+
+如果已有 `.env`，保留它并只补充需要的配置，不要覆盖已有密钥。复制样例对 Demo 不是必需步骤。安装清单固定直接依赖，`requirements-verified.txt` 约束本轮验证的传递依赖版本。
+
+**终端一，API：**
+
+```powershell
+.\.venv\Scripts\python.exe -X utf8 -m demo.local --port 8013
+```
+
+**终端二，学生界面：**
+
+```powershell
+$env:FRONTEND_API_BASE_URL = "http://127.0.0.1:8013"
+.\.venv\Scripts\python.exe -X utf8 -m streamlit run frontend/app.py --server.fileWatcherType none --server.port 8501
+```
+
+**Linux / macOS：**
 
 ```bash
-cp .env.example .env
-# Edit .env — set LLM_PROVIDER (openai|gemini|demo) and your key.
+python3.13 -m venv .venv
+.venv/bin/python -m pip install -r requirements-local.txt -r requirements-frontend.txt -c requirements-verified.txt
+TIKTOKEN_CACHE_DIR="$PWD/demo/token_cache" .venv/bin/python -c "import tiktoken; tiktoken.get_encoding('cl100k_base')"
+cp -n .env.example .env
+.venv/bin/python -m demo.local --port 8013
+# 另一个终端
+FRONTEND_API_BASE_URL=http://127.0.0.1:8013 .venv/bin/python -m streamlit run frontend/app.py --server.fileWatcherType none --server.port 8501
 ```
 
-> No key? Set `LLM_PROVIDER=demo` — the system runs fully offline with a deterministic demo tutor.
+- 学生使用：**http://localhost:8501**。
+- 开发者接口文档：**http://localhost:8013/docs**。
+- 健康检查：**http://localhost:8013/health**。
 
-### 4. Run the backend
+首次进入后选择“递归” → 阅读讲解 → 进入专项练习 → 提交答案 → 查看学习画像。所有统计来自 API；尚无历史时显示引导。停止服务时在对应终端按 `Ctrl+C`。
 
-```bash
-python main.py
-# or: uvicorn api.main:app --reload --port 8000
+## 演示模式与真实模型
+
+`demo.local` 强制选择固定 Demo Provider、关闭 RAG，使用 `data/local_demo/` 中的业务数据库与检查点。它不调用付费模型，也不下载 Embedding 权重。安装阶段的 tiktoken 命令从官方源下载并校验固定分词词表，准备后可离线计数；词表缓存不随源码分发。固定题库覆盖六个主题，每主题 8 道不同题干。
+
+客观题按完整选项或数值容差评分；Demo 的非空主观题固定得分为该题分值的 80%，空答案为 0。Demo 流程与测试通过不代表真实教学效果、模型准确率或线上性能；没有注册用户量、吞吐量或效果提升等项目指标。
+
+已有 OpenAI / Gemini Provider 通过 `LLM_PROVIDER`、对应 `LLM_*_API_KEY` 与 `LLM_*_MODEL` 配置。真实模型模式使用普通 `api.main:app` 入口，不能用会强制 Demo 的启动器。密钥只放本地忽略文件或部署平台 Secret，真实模型路径本轮未调用。详见 [部署说明](docs/deployment.md)。
+
+RAG 完整依赖在 `requirements.txt`；安装可能下载模型运行库。PDF 解析依赖 PyMuPDF，其 AGPL/商业双许可需要单独处理，不能将项目 MIT 声明理解为所有依赖均为 MIT。见 [第三方说明](THIRD_PARTY_NOTICES.md)。
+
+## 测试与 CI
+
+```powershell
+.\.venv\Scripts\python.exe -X utf8 -m pip install -r requirements-test-local.txt -r requirements-frontend.txt -c requirements-verified.txt
+$env:ANONYMIZED_TELEMETRY = 'False'
+$env:HF_HUB_OFFLINE = '1'
+$env:LANGSMITH_TRACING = 'false'
+$env:LANGCHAIN_TRACING_V2 = 'false'
+$env:TIKTOKEN_CACHE_DIR = Join-Path (Get-Location) 'demo/token_cache'
+.\.venv\Scripts\python.exe -X utf8 -c "import tiktoken; tiktoken.get_encoding('cl100k_base')"
+.\.venv\Scripts\python.exe -X utf8 -m pytest tests
+.\.venv\Scripts\python.exe -X utf8 -m pip check
 ```
 
-Verify: `curl http://localhost:8000/health` → `{"status":"ok","demo_mode":true}`. Interactive docs at `http://localhost:8000/docs`.
+测试使用临时数据库、Demo Provider 和 FakeEmbedder，覆盖真实图执行、上下文预算、工具约束、恢复/重放及前端组件。CI 配置在 [.github/workflows/ci.yml](.github/workflows/ci.yml)，在 push 与 Pull Request 时运行 Windows / Ubuntu 的同一套离线模型测试。每次远程执行结果以 [GitHub Actions](https://github.com/uplaybiss/CodeMentor/actions/workflows/ci.yml) 为准；本地验证记录见 [docs/testing.md](docs/testing.md)。
 
-### 5. Run the frontend
+## 目录与进一步文档
 
-```bash
-streamlit run frontend/app.py
+```text
+agents/          教学、练习、测评、记忆、推荐与检索节点
+api/             FastAPI 路由与依赖注入
+config/          类型化配置、课程规则、中文显示映射
+database/        SQLite / SQLAlchemy 模型与 Repository
+demo/            无密钥启动器与验收脚本
+frontend/        Streamlit 工作台、HTTP 客户端与 UI 会话
+graphs/          两个 LangGraph 工作流
+harness/         Context Builder / Tool Guard / Session Runtime
+models/          Pydantic 协议与图状态
+prompts/         中文自然语言要求与结构化输出约束
+services/        Provider、RAG 与 Container
+tests/           自动化回归与组件测试
+evaluation/      上游评估脚本；生成结果不作为本项目效果指标
+experiments/     上游分块实验脚本；生成结果不随候选发布
+docs/            架构、部署、测试、安全与依赖许可说明
 ```
 
-Open http://localhost:8501, enter a student ID, and start chatting.
+查看 [Windows 前端指南](README_FRONTEND_ZH.md)、[开源安全报告](docs/security-audit.md) 和 [依赖许可清单](docs/dependency-licenses.md)。
 
----
+## 当前使用边界
 
-## 🔌 REST API
+这是本地学习与 Agent 工程示例。学习档案名称不是登录；学生 ID 是查询/隔离键，文档语料和部分读取接口不构成完整多租户权限系统。当前 SQLite 与进程内运行锁适合单 API 进程，写入超时是软截止，不能强行终止已在执行的同步写入。
 
-| Method | Endpoint | Description |
-|---|---|---|
-| `GET` | `/health` | Health + mode probe |
-| `POST` | `/api/v1/chat` | One tutoring turn (`ChatRequest` → `ChatResponse`) |
-| `POST` | `/api/v1/chat/submit-quiz` | Grade a quiz submission → `EvaluationResult` |
-| `GET` | `/api/v1/students/{id}` | Get / lazily create a student profile |
-| `PUT` | `/api/v1/students/{id}` | Update name/level/learning style |
-| `GET` | `/api/v1/quizzes/{student_id}` | List quiz ids |
-| `GET` | `/api/v1/quiz/{quiz_id}` | Full quiz with questions |
-| `GET` | `/api/v1/dashboard/{student_id}` | Progress summary for the dashboard |
-| `POST` | `/api/v1/documents/{student_id}` | Upload & index a document (multipart) |
-| `GET` | `/api/v1/documents/{student_id}` | List uploaded documents |
-| `DELETE` | `/api/v1/documents/{doc_id}` | Delete document + embeddings |
-
-Example chat turn:
-
-```bash
-curl -X POST http://localhost:8000/api/v1/chat \
-  -H "Content-Type: application/json" \
-  -d '{"student_id":"student-1","message":"Teach me about fractions","with_quiz":true}'
-```
-
----
-
-## 🧪 Testing
-
-```bash
-pytest -q                # run the full suite
-pytest tests/ -k rag     # run only RAG tests
-ruff check .             # lint (config in ruff.toml)
-```
-
-The suite covers the LLM abstraction (incl. demo provider), chunking & embeddings, the vector store, repositories, every agent, both graphs, the API, and the RAG ingestion path. Tests run against an in-memory SQLite DB and a temporary ChromaDB so they never touch your data. The `ruff.toml` codifies the lint policy (errors, imports, typing, bugbear, complexity, pylint subset) with three documented project idioms ignored.
-
----
-
-## ⚙️ Configuration
-
-All configuration flows through [pydantic-settings](https://docs.pydantic.dev/latest/concepts/pydantic_settings/) from environment variables / `.env`. Key groups (see `.env.example`):
-
-| Prefix | Controls |
-|---|---|
-| `APP_*` | name, version, host, port, CORS origins |
-| `LLM_*` | provider, API keys, models, temperature, timeouts |
-| `DATABASE_*` | SQLAlchemy URL (SQLite default, any DB works) |
-| `VECTOR_*` | ChromaDB dir, collection, embedding model, chunking |
-| `API_*` | API prefix, upload dir, pagination |
-| `LOGGING_*` | level, JSON format, rotation |
-| `FRONTEND_*` | API base URL used by the Streamlit client |
-
----
-
-## 🗂️ Storage
-
-| Store | Technology | Location | Contents |
-|---|---|---|---|
-| Relational | SQLite (SQLAlchemy) | `./data/edueagent.db` | students, lessons, quizzes, attempts, conversations, memory, documents, progress |
-| Vector | ChromaDB | `./data/chroma/` | embedded note chunks with source/page metadata |
-| Uploads | local filesystem | `./data/uploads/` | original uploaded documents |
-| Logs | rotating files | `./logs/` | application logs |
-
----
-
-## 🛡️ Reliability & correctness
-
-- **Deterministic grading** — objective question scores are computed in code; the LLM only grades written answers, with a neutral fallback on failure.
-- **Graceful degradation** — any LLM failure leaves the turn intact; RAG retrieval failing returns an empty context instead of crashing.
-- **Lazy LLM init** — the app boots without an API key; the key is only needed when a chat is actually attempted.
-- **Typed outputs** — every agent returns a validated Pydantic model, and output parsing is fenced-JSON tolerant.
-- **Consistent errors** — one `EduAgentError` tree maps to structured HTTP responses.
-
----
-
-## 📄 License
-
-MIT — see `LICENSE`.
-
----
-
-*Generated with [Claude Code](https://claude.com/claude-code).*
+当前没有生产身份认证、计费、部署平台适配或公开演示站。测试部署先采用受访问控制的单实例 Demo；不要把真实学习记录或付费模型服务直接暴露到公网。部署限制与数据持久化方案见 [docs/deployment.md](docs/deployment.md)。

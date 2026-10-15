@@ -23,6 +23,12 @@ class QuizRepository(BaseRepository):
         now = utc_now_iso()
         with self.session() as session:
             existing = session.get(Quiz, quiz.id)
+            if existing is not None:
+                if existing.student_id != student_id:
+                    from harness.errors import ToolPermissionError
+
+                    raise ToolPermissionError("Quiz ID belongs to another student")
+                return self.get_quiz(quiz.id)
             if existing is None:
                 session.add(
                     Quiz(
@@ -33,6 +39,7 @@ class QuizRepository(BaseRepository):
                         created_at=now,
                     )
                 )
+                session.flush()  # parent must exist before inserting FK-bound questions
             for question in quiz.questions:
                 session.add(
                     QuizQuestion(
@@ -46,6 +53,7 @@ class QuizRepository(BaseRepository):
                         points=question.points,
                     )
                 )
+            session.flush()  # visible to a reload within the guard's outer transaction
         return quiz
 
     # -------------------------------------------------------------- read --
@@ -54,11 +62,15 @@ class QuizRepository(BaseRepository):
             header = session.get(Quiz, quiz_id)
             if header is None:
                 return None
-            questions = session.execute(
-                select(QuizQuestion)
-                .where(QuizQuestion.quiz_id == quiz_id)
-                .order_by(QuizQuestion.id)
-            ).scalars().all()
+            questions = (
+                session.execute(
+                    select(QuizQuestion)
+                    .where(QuizQuestion.quiz_id == quiz_id)
+                    .order_by(QuizQuestion.id)
+                )
+                .scalars()
+                .all()
+            )
             return QuizSchema(
                 id=header.id,
                 topic=header.topic,
@@ -87,7 +99,9 @@ class QuizRepository(BaseRepository):
                     .where(Quiz.student_id == student_id)
                     .order_by(Quiz.created_at.desc())
                     .limit(limit)
-                ).scalars().all()
+                )
+                .scalars()
+                .all()
             )
 
     # ---------------------------------------------------------- attempts --
@@ -146,12 +160,16 @@ class QuizRepository(BaseRepository):
     def list_attempts(self, student_id: str, limit: int = 50) -> list[dict]:
         """Attempt history for the progress chart (chronological)."""
         with self.session() as session:
-            rows = session.execute(
-                select(QuizAttempt)
-                .where(QuizAttempt.student_id == student_id)
-                .order_by(QuizAttempt.created_at.asc())
-                .limit(limit)
-            ).scalars().all()
+            rows = (
+                session.execute(
+                    select(QuizAttempt)
+                    .where(QuizAttempt.student_id == student_id)
+                    .order_by(QuizAttempt.created_at.asc())
+                    .limit(limit)
+                )
+                .scalars()
+                .all()
+            )
             return [
                 {
                     "attempt_id": r.id,

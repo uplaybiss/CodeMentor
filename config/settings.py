@@ -36,9 +36,7 @@ _ENV_FILE = ".env"
 class AppSettings(BaseSettings):
     """Application-level metadata and runtime behaviour."""
 
-    model_config = SettingsConfigDict(
-        env_prefix="APP_", extra="ignore", env_file=_ENV_FILE
-    )
+    model_config = SettingsConfigDict(env_prefix="APP_", extra="ignore", env_file=_ENV_FILE)
 
     name: str = "EduAgent"
     version: str = "1.0.0"
@@ -62,9 +60,7 @@ class AppSettings(BaseSettings):
 class LLMSettings(BaseSettings):
     """LLM provider selection. Provider is ``openai`` or ``gemini``."""
 
-    model_config = SettingsConfigDict(
-        env_prefix="LLM_", extra="ignore", env_file=_ENV_FILE
-    )
+    model_config = SettingsConfigDict(env_prefix="LLM_", extra="ignore", env_file=_ENV_FILE)
 
     provider: str = "openai"
     openai_api_key: str = ""
@@ -80,9 +76,7 @@ class LLMSettings(BaseSettings):
 class DatabaseSettings(BaseSettings):
     """SQLAlchemy connection settings."""
 
-    model_config = SettingsConfigDict(
-        env_prefix="DATABASE_", extra="ignore", env_file=_ENV_FILE
-    )
+    model_config = SettingsConfigDict(env_prefix="DATABASE_", extra="ignore", env_file=_ENV_FILE)
 
     url: str = "sqlite:///./data/edueagent.db"
     echo: bool = False
@@ -92,10 +86,9 @@ class DatabaseSettings(BaseSettings):
 class VectorStoreSettings(BaseSettings):
     """ChromaDB + embedding model settings."""
 
-    model_config = SettingsConfigDict(
-        env_prefix="VECTOR_", extra="ignore", env_file=_ENV_FILE
-    )
+    model_config = SettingsConfigDict(env_prefix="VECTOR_", extra="ignore", env_file=_ENV_FILE)
 
+    enabled: bool = True
     persist_directory: str = "./data/chroma"
     collection_name: str = "edueagent_notes"
     embedding_model: str = "all-MiniLM-L6-v2"
@@ -107,9 +100,7 @@ class VectorStoreSettings(BaseSettings):
 class ApiSettings(BaseSettings):
     """REST API surface settings."""
 
-    model_config = SettingsConfigDict(
-        env_prefix="API_", extra="ignore", env_file=_ENV_FILE
-    )
+    model_config = SettingsConfigDict(env_prefix="API_", extra="ignore", env_file=_ENV_FILE)
 
     prefix: str = "/api/v1"
     upload_dir: str = "./data/uploads"
@@ -119,9 +110,7 @@ class ApiSettings(BaseSettings):
 class LoggingSettings(BaseSettings):
     """Centralised logging behaviour."""
 
-    model_config = SettingsConfigDict(
-        env_prefix="LOGGING_", extra="ignore", env_file=_ENV_FILE
-    )
+    model_config = SettingsConfigDict(env_prefix="LOGGING_", extra="ignore", env_file=_ENV_FILE)
 
     level: str = "INFO"
     json_format: bool = False
@@ -133,11 +122,24 @@ class LoggingSettings(BaseSettings):
 class FrontendSettings(BaseSettings):
     """Where the Streamlit dashboard reaches the API."""
 
-    model_config = SettingsConfigDict(
-        env_prefix="FRONTEND_", extra="ignore", env_file=_ENV_FILE
-    )
+    model_config = SettingsConfigDict(env_prefix="FRONTEND_", extra="ignore", env_file=_ENV_FILE)
 
-    api_base_url: str = "http://localhost:8000"
+    api_base_url: str = "http://127.0.0.1:8013"
+
+
+class HarnessSettings(BaseSettings):
+    """Local execution limits, independent of teaching/model decisions."""
+
+    model_config = SettingsConfigDict(env_prefix="HARNESS_", extra="ignore", env_file=_ENV_FILE)
+    context_tokens: int = Field(default=512, ge=128, le=4096)
+    recent_mistakes: int = Field(default=3, ge=0, le=10)
+    recent_records: int = Field(default=3, ge=0, le=10)
+    max_tool_calls: int = Field(default=40, ge=1, le=200)
+    max_repeat_calls: int = Field(default=2, ge=1, le=10)
+    tool_timeout_seconds: float = Field(default=10.0, gt=0, le=300)
+    readonly_retries: int = Field(default=1, ge=0, le=2)
+    recursion_limit: int = Field(default=20, ge=1, le=100)
+    checkpoint_path: str = ""  # derive beside the business SQLite DB when unset
 
 
 class Settings(BaseSettings):
@@ -157,6 +159,7 @@ class Settings(BaseSettings):
     api: ApiSettings = Field(default_factory=ApiSettings)
     logging: LoggingSettings = Field(default_factory=LoggingSettings)
     frontend: FrontendSettings = Field(default_factory=FrontendSettings)
+    harness: HarnessSettings = Field(default_factory=HarnessSettings)
 
 
 @lru_cache(maxsize=1)

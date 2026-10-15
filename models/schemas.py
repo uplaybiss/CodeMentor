@@ -102,8 +102,8 @@ class Quiz(BaseModel):
 class AnswerSubmission(BaseModel):
     """One student answer to one question."""
 
-    question_id: str
-    answer: str
+    question_id: str = Field(min_length=1, max_length=80)
+    answer: str = Field(max_length=8000)
 
 
 class QuizSubmission(BaseModel):
@@ -222,10 +222,13 @@ class DashboardSummary(BaseModel):
 class ChatRequest(BaseModel):
     """Body for POST /chat — one student turn in a tutoring conversation."""
 
-    student_id: str
+    student_id: str = Field(min_length=1, max_length=64)
     message: str = Field(min_length=1, max_length=8000)
     topic: str | None = None
     with_quiz: bool = False
+    session_id: str | None = Field(default=None, min_length=1, max_length=64)
+    run_id: str | None = Field(default=None, min_length=1, max_length=64)
+    pause_before: str | None = None
 
 
 class ChatResponse(BaseModel):
@@ -240,3 +243,8 @@ class ChatResponse(BaseModel):
     recommendations: Recommendation | None = None
     rag_sources: list[str] = Field(default_factory=list)
     messages: list[dict] = Field(default_factory=list)
+    runtime: dict = Field(default_factory=dict)
+    harness_metrics: dict = Field(default_factory=dict)
+    context_metrics: dict = Field(default_factory=dict)
+    pending_nodes: list[str] = Field(default_factory=list)
+    replayed: bool = False

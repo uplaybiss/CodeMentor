@@ -1,0 +1,51 @@
+name: Offline model tests
+
+on: [push, pull_request, workflow_dispatch]
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python: ['3.13']
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
+    env:
+      PYTHONUTF8: '1'
+      LLM_PROVIDER: demo
+      LLM_OPENAI_API_KEY: ''
+      LLM_GEMINI_API_KEY: ''
+      VECTOR_ENABLED: 'false'
+      ANONYMIZED_TELEMETRY: 'False'
+      HF_HUB_OFFLINE: '1'
+      LANGCHAIN_TRACING_V2: 'false'
+      LANGSMITH_TRACING: 'false'
+      LANGSMITH_API_KEY: ''
+      TIKTOKEN_CACHE_DIR: ${{ github.workspace }}/demo/token_cache
+    steps:
+      - name: Checkout without persisted credentials
+        uses: actions/checkout@9f698171ed81b15d1823a05fc7211befd50c8ae0 # v6.0.3
+        with:
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
+        with:
+          python-version: ${{ matrix.python }}
+          cache: pip
+          cache-dependency-path: |
+            requirements-local.txt
+            requirements-test-local.txt
+            requirements-frontend.txt
+            requirements-verified.txt
+      - name: Install test and frontend dependencies
+        run: python -m pip --isolated install --index-url https://pypi.org/simple -r requirements-test-local.txt -r requirements-frontend.txt -c requirements-verified.txt
+      - name: Check dependency consistency
+        run: python -m pip check
+      - name: Prepare tokenizer vocabulary without a model API call
+        run: python -c "import tiktoken; tiktoken.get_encoding('cl100k_base')"
+      - name: Run all original and frontend tests without paid models
+        run: python -X utf8 -m pytest tests --junitxml=.ci-results/junit.xml

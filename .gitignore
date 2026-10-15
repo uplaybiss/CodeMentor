@@ -1,67 +1,87 @@
-# =============================================================================
-# EduAgent — gitignore
-# =============================================================================
-
-# --- Python ------------------------------------------------------------------
+# Python, environments and tooling
 __pycache__/
 *.py[cod]
-*$py.class
 *.so
 .Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-.pytest_cache/
-.ruff_cache/
-.mypy_cache/
-.coverage
-htmlcov/
-.coverage.*
-.tox/
-.nox/
-.hypothesis/
-
-# --- Virtual environments ------------------------------------------------------
 .venv/
+.venv-*/
 venv/
 env/
 ENV/
-env.bak/
-venv.bak/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.cache/
+.ipynb_checkpoints/
+.hypothesis/
+.tox/
+.nox/
+.coverage*
+htmlcov/
+coverage.xml
+junit*.xml
+.ci-results/
+build/
+dist/
+*.egg-info/
+*.egg
 
-# --- Secrets & environment -----------------------------------------------------
+# Secrets: only the reviewed sample is public
 .env
 .env.*
 !.env.example
+.streamlit/secrets.toml
+secrets/
+credentials*.json
+*service-account*.json
+*.pem
+*.key
+*.p12
+*.pfx
 
-# --- Application data (SQLite, Chroma, uploads, logs) --------------------------
-data/
-logs/
+# Runtime storage, checkpoints, uploads, logs and caches
+/data/
+/logs/
+/uploads/
+/checkpoints/
+/cache/
 *.db
-*.db-journal
+*.db-*
+*.sqlite
+*.sqlite-*
+*.sqlite3
+*.sqlite3-*
+*.log
+*.log.*
+*.pid
+*.tmp
+*.bak
+*.pt
+*.pth
+*.safetensors
 
-# --- IDE / OS ------------------------------------------------------------------
+# Local evidence/handovers and inherited generated benchmark outputs
+/evidence/
+/release-local/
+/CODEMENTOR_README.md
+/FRONTEND_CHANGELOG.md
+/FRONTEND_VERIFICATION.md
+/docs/PROJECT_SUMMARY.md
+/docs/release-preview.md
+/evaluation/results/
+/experiments/results/
+/experiments/findings.md
+/chat_demo.json
+/eval_demo.json
+/quiz_submit.json
+/rag_demo.json
+
+# Tokenizer vocabulary is fetched/validated by tiktoken during setup, not shipped.
+/demo/token_cache/
+
+# Editor and OS files
 .idea/
 .vscode/
 *.swp
 .DS_Store
 Thumbs.db
-
-# --- Docker --------------------------------------------------------------------
-*.pid
-
-# --- Generated charts (regenerate: python experiments/run_experiments.py) ------
-experiments/results/graphs/
-evaluation/results/graphs/

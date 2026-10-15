@@ -14,6 +14,8 @@ langchain>=0.3,<1.0
 langchain-openai>=0.2,<1.0            # OpenAI provider
 langchain-google-genai>=2.0,<3.0      # Gemini provider (drop-in swap)
 langgraph>=0.2.60,<1.0                # agent graph orchestration
+langgraph-checkpoint-sqlite==2.0.11   # CodeMentor persistent graph state
+aiosqlite==0.21.0                    # compatibility with sqlite saver 2.0.11
 
 # --- Validation / config ------------------------------------------------------
 pydantic>=2.7,<3.0

@@ -1,5 +1,6 @@
 # Memory agent — extracts durable facts from a tutoring turn.
 system: |
+  请用简体中文描述学习事实，保留字段名和fact_type枚举。涉及具体知识点时保留其内部topic标识，便于后续按知识点检索。
   You are the Memory agent of EduAgent. From the student's message and the
   assistant's response, you extract a small set of facts worth remembering.
 

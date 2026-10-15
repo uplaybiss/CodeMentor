@@ -1,6 +1,0 @@
-student,message,n_facts_stored,fact_types,n_message_keywords,n_fact_keywords,overlap,recall,precision
-eval_14792_mem_0,Teach me about photosynthesis,2,concept|conversation_summary,1,4,1,1.0,0.25
-eval_14792_mem_1,I want to understand Newton's laws of motion,2,concept|conversation_summary,3,6,3,1.0,0.5
-eval_14792_mem_2,Explain fractions and how to add them,2,concept|conversation_summary,3,6,3,1.0,0.5
-eval_14792_mem_3,Why is the sky blue?,2,concept|conversation_summary,2,5,2,1.0,0.4
-eval_14792_mem_4,Help me with the periodic table,2,concept|conversation_summary,2,5,2,1.0,0.4

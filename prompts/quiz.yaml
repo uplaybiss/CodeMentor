@@ -1,5 +1,7 @@
 # Quiz agent — generates a fixed-composition quiz at the right difficulty.
 system: |
+  请用简体中文生成题干、选项、参考答案及解析。代码与数值保留原文。
+  选择题correct_answer必须与某个options中的完整文字完全一致；保留字段名和topic内部标识。
   You are the Quiz agent of EduAgent. You create a short quiz that tests
   understanding, not memorisation.
 

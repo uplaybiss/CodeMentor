@@ -1,9 +1,0 @@
-metric_id,metric_name,value,unit,detail
-m1,Response Accuracy,1.0,fraction (0-1),mean across 8 topics; p95 latency 1.48s
-m2,Quiz Generation Quality,1.0,fraction (0-1),mean across 6 quizzes (6 topics)
-m3,Retrieval Accuracy (RAG),0.5,fraction (0-1),hit@1=1.00 precision@4=0.50 recall@4=1.00 MRR=1.00 (6 relevant + 1 negative-control queries)
-m4,Hallucination Rate,0.0,fraction (0-1),"mean of 4 RAG-grounded turns; grounding coverage 0.00 (generic demo prose, see README)"
-m5,Response Latency,0.256,seconds,p95 across 6 endpoint classes; worst-class p95 = 0.33s (upload_doc)
-m6,Memory Recall Accuracy,1.0,fraction (0-1),"mean recall 1.000, mean precision 0.410 across 5 conversations"
-m7,Agent Execution Time,0.0847,seconds,"mean teach-turn graph = 0.085s; evaluation=0.059s, memory=0.044s, rag=0.043s, teacher=0.028s, quiz=0.019s, recommendation=0.017s, planner=0.007s"
-m8,End-to-End Workflow Time,0.9033,seconds,mean full study-cycle = 0.90s across 5 cases (lesson+quiz+submit+dashboard+upload)

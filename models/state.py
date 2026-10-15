@@ -25,25 +25,26 @@ class EduAgentState(TypedDict, total=False):
     with_quiz: bool
 
     # --- Planner -------------------------------------------------------------
-    intent: str                       # models.enums.ChatIntent value
+    intent: str  # models.enums.ChatIntent value
     learning_goal: str
-    level: str                        # models.enums.StudentLevel value
+    level: str  # models.enums.StudentLevel value
 
     # --- Teacher -------------------------------------------------------------
-    lesson: dict[str, Any]            # serialised models.schemas.Explanation
+    lesson: dict[str, Any]  # serialised models.schemas.Explanation
 
     # --- Quiz / evaluation ----------------------------------------------------
-    quiz: dict[str, Any]              # serialised models.schemas.Quiz
-    quiz_id: str | None               # id of the quiz being answered
-    answers: list[dict[str, Any]]     # serialised AnswerSubmission list
-    evaluation: dict[str, Any]        # serialised EvaluationResult
+    quiz: dict[str, Any]  # serialised models.schemas.Quiz
+    quiz_id: str | None  # id of the quiz being answered
+    answers: list[dict[str, Any]]  # serialised AnswerSubmission list
+    evaluation: dict[str, Any]  # serialised EvaluationResult
+    question_feedback: list[dict[str, Any]]
 
     # --- Memory / recommendation ----------------------------------------------
     memory_updates: Annotated[list[dict[str, Any]], operator.add]
-    recommendations: dict[str, Any]   # serialised Recommendation
+    recommendations: dict[str, Any]  # serialised Recommendation
 
     # --- RAG ------------------------------------------------------------------
-    rag_context: dict[str, Any]       # serialised RAGContext
+    rag_context: dict[str, Any]  # serialised RAGContext
     rag_sources: list[str]
 
     # --- Conversation transcript (accumulating) --------------------------------
@@ -52,3 +53,10 @@ class EduAgentState(TypedDict, total=False):
     # --- Housekeeping ----------------------------------------------------------
     errors: Annotated[list[str], operator.add]
     next_agent: str
+    # Harness outputs are replaced per node; reducers would duplicate counters.
+    harness_thread_id: str
+    session_id: str
+    run_id: str
+    task_context: dict[str, Any]
+    context_metrics: dict[str, Any]
+    harness_metrics: dict[str, Any]

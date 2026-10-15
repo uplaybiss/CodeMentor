@@ -1,0 +1,98 @@
+{
+  "validation_date": "2026-10-15",
+  "python": "3.13.14",
+  "platform": "Windows",
+  "fresh_install": {
+    "index": "https://pypi.org/simple",
+    "isolated_pip": true,
+    "runtime_only_before_test_extras": true,
+    "test_environment_separate_from_project_venv": true
+  },
+  "tests": {
+    "total": 158,
+    "passed": 158,
+    "failed": 0,
+    "errors": 0,
+    "warnings": 1,
+    "console_duration_seconds": 59.01,
+    "junit_duration_seconds": 58.982,
+    "first_run": {
+      "passed": 151,
+      "failed": 7,
+      "cause": "Test RAG switch inherited Demo VECTOR_ENABLED=false"
+    },
+    "fix": "tests/conftest.py explicitly enables FakeEmbedder RAG test profile; no tests removed"
+  },
+  "runtime_only_startup": {
+    "date": "2026-10-15",
+    "python": "3.13.14",
+    "fresh_environment": true,
+    "installation_profile": "requirements-local + requirements-frontend, with verified constraints; no test extras installed",
+    "health": {
+      "status": "ok",
+      "version": "0.1.0",
+      "demo_mode": true,
+      "rag_enabled": false
+    },
+    "ui_http_status": 200,
+    "app_test_pages_without_import_error": [
+      "学习首页",
+      "AI 辅导",
+      "专项练习",
+      "学习画像",
+      "学习资料"
+    ],
+    "quiz_questions": 8,
+    "demo_score": 97.5,
+    "same_submission_replayed": true,
+    "total_attempts_after_replay": 1,
+    "paid_model_calls": 0,
+    "embedding_model_downloads": 0
+  },
+  "final_startup": {
+    "date": "2026-10-15",
+    "python": "3.13.14",
+    "fresh_environment": true,
+    "test_extras_present": true,
+    "health": {
+      "status": "ok",
+      "version": "0.1.0",
+      "demo_mode": true,
+      "rag_enabled": false
+    },
+    "ui_http_status": 200,
+    "app_test_pages_without_import_error": [
+      "学习首页",
+      "AI 辅导",
+      "专项练习",
+      "学习画像",
+      "学习资料"
+    ],
+    "quiz_questions": 8,
+    "demo_score": 97.5,
+    "same_submission_replayed": true,
+    "total_attempts_after_replay": 1,
+    "paid_model_calls": 0,
+    "embedding_model_downloads": 0
+  },
+  "quality": {
+    "date": "2026-10-15",
+    "protected_items": 106,
+    "unchanged": 105,
+    "changes": [
+      "tests/conftest.py"
+    ],
+    "production_sources_and_prompts_unchanged": true,
+    "test_fixture_function_names_preserved": true,
+    "typed_configuration_variables": 44,
+    "example_variables": 50,
+    "example_missing_variables": [],
+    "workflow_yaml_and_permissions_validated": true,
+    "actions_sha_pins_validated": true
+  },
+  "pip_check": "No broken requirements found",
+  "paid_model_calls": 0,
+  "real_embedding_models_downloaded": 0,
+  "evidence_scope": "Dated local validation snapshot; not repository, Release or remote CI status",
+  "remote_ci_evidence_url": "https://github.com/uplaybiss/CodeMentor/actions/workflows/ci.yml"
+}

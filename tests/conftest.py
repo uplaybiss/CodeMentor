@@ -36,6 +36,8 @@ def settings(tmp_path) -> Settings:
             create_on_startup=True,
         ),
         vector_store=VectorStoreSettings(
+            # RAG cases use FakeEmbedder even when the Demo environment disables RAG.
+            enabled=True,
             persist_directory=str(tmp_path / "chroma"),
             collection_name="test_notes",
             top_k=4,

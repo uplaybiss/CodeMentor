@@ -15,6 +15,7 @@ class HealthResponse(BaseModel):
     status: str = "ok"
     version: str = "1.0.0"
     demo_mode: bool = False
+    rag_enabled: bool = False
 
 
 @router.get("/health", response_model=HealthResponse)
@@ -23,4 +24,5 @@ async def health(container: Container = Depends(get_container_dep)) -> HealthRes
         status="ok",
         version=container.settings.app.version,
         demo_mode=container.settings.llm.provider == "demo",
+        rag_enabled=container.settings.vector_store.enabled,
     )
